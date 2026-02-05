@@ -28,8 +28,4 @@
       <ProjectReference Include="..\Service.Tasks.Domain\Service.Tasks.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Data\" />
-    </ItemGroup>
-
 </Project>
