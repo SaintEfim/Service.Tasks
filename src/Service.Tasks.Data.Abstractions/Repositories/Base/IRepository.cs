@@ -1,4 +1,4 @@
-using Service.Task.Shared.Models;
+using Service.Tasks.Shared.Models;
 using Service.Tasks.Data.Models.Base;
 
 namespace Service.Tasks.Data.Repositories.Base;

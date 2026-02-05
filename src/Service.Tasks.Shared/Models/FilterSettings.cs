@@ -1,4 +1,4 @@
-﻿namespace Service.Task.Shared.Models;
+﻿namespace Service.Tasks.Shared.Models;
 
 public class FilterSettings
 {

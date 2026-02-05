@@ -1,8 +1,8 @@
 using AutoMapper;
 using Kf.Service.Warehouse.Domain.Models.Base;
-using Service.Task.Shared.Models;
 using Service.Tasks.Data.Models.Base;
 using Service.Tasks.Data.Repositories.Base;
+using Service.Tasks.Shared.Models;
 
 namespace Service.Task.Domain.Services.Base;
 
