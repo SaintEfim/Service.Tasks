@@ -24,4 +24,8 @@
       <ProjectReference Include="..\Service.Tasks.Data\Service.Tasks.Data.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Data\" />
+    </ItemGroup>
+
 </Project>

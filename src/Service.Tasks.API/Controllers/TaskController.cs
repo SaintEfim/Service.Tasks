@@ -1,0 +1,80 @@
+﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
+using NSwag.Annotations;
+using Service.Tasks.API.Controllers.Base;
+using Service.Tasks.API.Models.Base;
+using Service.Tasks.API.Models.Task;
+using Service.Tasks.Domain.Models;
+using Service.Tasks.Domain.Services;
+using Service.Tasks.Shared.Models;
+using static Microsoft.AspNetCore.Http.StatusCodes;
+
+namespace Service.Tasks.API.Controllers;
+
+[Route("api/v1/Tasks")]
+public class TaskController : ControllerCrudBase<TaskDto, TaskModel, ITaskManager, ITaskProvider>
+{
+    public TaskController(
+        IMapper mapper,
+        ITaskManager manager,
+        ITaskProvider provider)
+        : base(mapper, manager, provider)
+    {
+    }
+
+    [HttpGet]
+    [OpenApiOperation(nameof(TaskGet))]
+    [SwaggerResponse(Status200OK, typeof(List<TaskDto>))]
+    public async Task<ActionResult<List<TaskDto>>> TaskGet(
+        [FromQuery] FilterSettings filter,
+        bool withIncludes = false,
+        CancellationToken cancellationToken = default)
+    {
+        return Ok(await Get(filter, withIncludes, cancellationToken));
+    }
+
+    [HttpGet("{id:guid}", Name = nameof(TaskGetById))]
+    [OpenApiOperation(nameof(TaskGetById))]
+    [SwaggerResponse(Status200OK, typeof(TaskDto))]
+    [SwaggerResponse(Status404NotFound, typeof(string))]
+    public async Task<ActionResult<TaskDto>> TaskGetById(
+        Guid id,
+        CancellationToken cancellationToken = default)
+    {
+        return Ok(await GetOneById(id, true, cancellationToken));
+    }
+
+    [HttpPost]
+    [OpenApiOperation(nameof(TaskCreate))]
+    [SwaggerResponse(Status201Created, typeof(CreateActionResultDto))]
+    public Task<IActionResult> TaskCreate(
+        [FromBody] TaskCreateDto payload,
+        CancellationToken cancellationToken = default)
+    {
+        return Create<TaskCreateDto, CreateActionResultDto>(payload, nameof(TaskGetById), cancellationToken);
+    }
+
+    [HttpPatch("{id:guid}")]
+    [OpenApiOperation(nameof(TaskUpdate))]
+    [SwaggerResponse(Status200OK, typeof(void))]
+    [SwaggerResponse(Status404NotFound, typeof(string))]
+    public async Task<IActionResult> TaskUpdate(
+        Guid id,
+        [FromBody] JsonPatchDocument<TaskUpdateDto> patchDocument,
+        CancellationToken cancellationToken = default)
+    {
+        return await Update(id, patchDocument, cancellationToken);
+    }
+
+    [HttpDelete("{id:guid}")]
+    [OpenApiOperation(nameof(TaskDelete))]
+    [SwaggerResponse(Status204NoContent, typeof(void))]
+    [SwaggerResponse(Status404NotFound, typeof(string))]
+    public async Task<IActionResult> TaskDelete(
+        Guid id,
+        CancellationToken cancellationToken = default)
+    {
+        return await Delete(id, cancellationToken);
+    }
+}
