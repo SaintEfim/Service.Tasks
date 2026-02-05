@@ -12,8 +12,5 @@ public class AutoMapperProfile : Profile
             .ReverseMap()
             .ForMember(dest => dest.Children, opt => opt.Ignore())
             .ForMember(dest => dest.Parent, opt => opt.Ignore());
-
-        CreateMap<ExecutorEntity, ExecutorModel>()
-            .ReverseMap();
     }
 }
