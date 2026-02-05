@@ -5,7 +5,7 @@ using Service.Tasks.Data.SqlLite.Context;
 
 namespace Service.Tasks.Data.SqlLite;
 
-public sealed class PmServiceSitesDataPostgreSqlModule : Module
+public sealed class TaskDataSqlLiteModule : Module
 {
     protected override void Load(
         ContainerBuilder builder)
