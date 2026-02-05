@@ -22,7 +22,7 @@ public abstract class DataProviderBase<TModel, TEntity, TRepository> : IDataProv
     protected IMapper Mapper { get; }
     protected TRepository Repository { get; }
 
-    public async Task<IEnumerable<TModel>> Get(
+    public virtual  async Task<IEnumerable<TModel>> Get(
         FilterSettings? filter = null,
         bool withInclude = false,
         CancellationToken cancellationToken = default)
@@ -30,7 +30,7 @@ public abstract class DataProviderBase<TModel, TEntity, TRepository> : IDataProv
         return Mapper.Map<IEnumerable<TModel>>(await Repository.Get(filter, withInclude, cancellationToken));
     }
 
-    public async Task<TModel> GetOneById(
+    public virtual  async Task<TModel> GetOneById(
         Guid id,
         bool withInclude = false,
         CancellationToken cancellationToken = default)

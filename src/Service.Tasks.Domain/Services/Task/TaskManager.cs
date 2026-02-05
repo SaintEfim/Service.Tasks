@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FluentValidation;
 using Service.Tasks.Data.Models;
 using Service.Tasks.Data.Repositories;
 using Service.Tasks.Domain.Models;
@@ -18,5 +17,12 @@ public class TaskManager
         IEnumerable<IDomainValidator<TaskModel>> validators)
         : base(mapper, repository, validators)
     {
+    }
+
+    protected override Task<TaskModel> UpdateAction<TDomainUpdate>(
+        TDomainUpdate model,
+        CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -29,34 +29,41 @@ public abstract class DataManagerBase<TDomain, TEntity, TRepository> : IDataMana
     protected IMapper Mapper { get; }
     protected TRepository Repository { get; }
 
-    public async Task<TDomain> Create(
-        TDomain model,
+    public async Task<TDomain> Create<TDomainCreate>(
+        TDomainCreate model,
         CancellationToken cancellationToken = default)
+        where TDomainCreate : class
     {
-        Validate<IDomainCreateValidator<TDomain>>(model, cancellationToken);
+        Validate<IDomainCreateValidator<TDomain>>(Mapper.Map<TDomain>(model), cancellationToken);
         return await CreateAction(model, cancellationToken);
     }
 
-    protected async Task<TDomain> CreateAction(
-        TDomain model,
+    protected virtual async Task<TDomain> CreateAction<TDomainCreate>(
+        TDomainCreate model,
         CancellationToken cancellationToken = default)
     {
-        return Mapper.Map<TDomain>(await Repository.Create(Mapper.Map<TEntity>(model), cancellationToken));
+        var entity = Mapper.Map<TEntity>(model);
+        var createdEntity = await Repository.Create(entity, cancellationToken);
+        return Mapper.Map<TDomain>(createdEntity);
     }
 
-    public async Task<TDomain> Update(
-        TDomain model,
+    public async Task<TDomain> Update<TDomainUpdate>(
+        TDomainUpdate model,
         CancellationToken cancellationToken = default)
+        where TDomainUpdate : class
     {
-        Validate<IDomainUpdateValidator<TDomain>>(model, cancellationToken);
-        return await UpdateAction(model, cancellationToken);
+        var domainModel = Mapper.Map<TDomain>(model);
+        Validate<IDomainUpdateValidator<TDomain>>(domainModel, cancellationToken);
+        return await UpdateAction(domainModel, cancellationToken);
     }
 
-    protected async Task<TDomain> UpdateAction(
-        TDomain model,
+    protected virtual async Task<TDomain> UpdateAction<TDomainUpdate>(
+        TDomainUpdate model,
         CancellationToken cancellationToken = default)
     {
-        return Mapper.Map<TDomain>(await Repository.Update(Mapper.Map<TEntity>(model), cancellationToken));
+        var entity = Mapper.Map<TEntity>(model);
+        var updatedEntity = await Repository.Update(entity, cancellationToken);
+        return Mapper.Map<TDomain>(updatedEntity);
     }
 
     public async Task<TDomain> Delete(
@@ -64,26 +71,29 @@ public abstract class DataManagerBase<TDomain, TEntity, TRepository> : IDataMana
         CancellationToken cancellationToken = default)
     {
         var entity = await Repository.GetOneById(id, cancellationToken: cancellationToken);
-        Validate<IDomainUpdateValidator<TDomain>>(Mapper.Map<TDomain>(entity), cancellationToken);
+        var domainModel = Mapper.Map<TDomain>(entity);
+        Validate<IDomainUpdateValidator<TDomain>>(domainModel, cancellationToken);
         return await DeleteAction(id, cancellationToken);
     }
 
-    protected async Task<TDomain> DeleteAction(
+    protected virtual async Task<TDomain> DeleteAction(
         Guid id,
         CancellationToken cancellationToken = default)
     {
-        return Mapper.Map<TDomain>(await Repository.Delete(id, cancellationToken));
+        var deletedEntity = await Repository.Delete(id, cancellationToken);
+        return Mapper.Map<TDomain>(deletedEntity);
     }
 
     protected void Validate<TV>(
         TDomain model,
         CancellationToken cancellationToken = default)
+        where TV : IDomainValidator<TDomain>
     {
-        var source = Validators.Where(v => v is IValidator<TDomain> && v.GetType()
-                .IsAssignableTo(typeof(TV)))
-            .Cast<IValidator<TDomain>>();
+        var validators = Validators.Where(v => v is TV)
+            .Cast<IValidator<TDomain>>()
+            .ToList();
 
-        Validate(model, source, cancellationToken);
+        Validate(model, validators, cancellationToken);
     }
 
     private static void Validate<TPayload>(

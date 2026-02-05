@@ -19,7 +19,7 @@ internal sealed class TaskUpdateValidator
                 context,
                 cancellationToken) =>
             {
-                if (!task.ParentId.HasValue)
+                /*if (!task.ParentId.HasValue)
                 {
                     return;
                 }
@@ -44,7 +44,7 @@ internal sealed class TaskUpdateValidator
                         .Where(x => x.Value.Count > 0), vertices))
                 {
                     context.AddFailure("Cycle detected tasks");
-                }
+                }*/
             });
     }
 }

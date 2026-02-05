@@ -6,13 +6,15 @@ namespace Service.Tasks.Domain.Services.Base;
 public interface IDataManager<TDomain>
     where TDomain : class, IModel
 {
-    Task<TDomain> Create(
-        TDomain model,
-        CancellationToken cancellationToken = default);
+    Task<TDomain> Create<TDomainCreate>(
+        TDomainCreate entity,
+        CancellationToken cancellationToken = default)
+        where TDomainCreate : class;
 
-    Task<TDomain> Update(
-        TDomain model,
-        CancellationToken cancellationToken = default);
+    Task<TDomain> Update<TDomainUpdate>(
+        TDomainUpdate model,
+        CancellationToken cancellationToken = default)
+        where TDomainUpdate : class;
 
     Task<TDomain> Delete(
         Guid id,
