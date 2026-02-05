@@ -1,0 +1,19 @@
+﻿using Autofac;
+using Service.Tasks.Data.Profile;
+using Sieve.Services;
+
+namespace Service.Tasks.Data;
+
+public class TaskDataModule : Module
+{
+    protected override void Load(
+        ContainerBuilder builder)
+    {
+        builder.RegisterType<SieveProcessor>()
+            .As<ISieveProcessor>();
+
+        builder.RegisterType<ApplicationSieveProcessor>()
+            .As<ISieveProcessor>()
+            .SingleInstance();
+    }
+}
