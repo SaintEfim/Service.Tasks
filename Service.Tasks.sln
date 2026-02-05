@@ -6,6 +6,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Tasks.Data.Abstract
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Tasks.Data.SqlLite", "src\Service.Tasks.Data.SqlLite\Service.Tasks.Data.SqlLite.csproj", "{C396EFD3-01C2-4466-88E5-9AB2ECEE6146}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Task.Domain.Abstractions", "src\Service.Task.Domain.Abstractions\Service.Task.Domain.Abstractions.csproj", "{985697D2-8E6F-4D65-85A1-CE75B34FEA94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Task.Shared", "src\Service.Task.Shared\Service.Task.Shared.csproj", "{30AFD406-4C4D-4231-84AB-B1AB8F026BC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,13 @@ Global
 		{C396EFD3-01C2-4466-88E5-9AB2ECEE6146}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C396EFD3-01C2-4466-88E5-9AB2ECEE6146}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C396EFD3-01C2-4466-88E5-9AB2ECEE6146}.Release|Any CPU.Build.0 = Release|Any CPU
+		{985697D2-8E6F-4D65-85A1-CE75B34FEA94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{985697D2-8E6F-4D65-85A1-CE75B34FEA94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{985697D2-8E6F-4D65-85A1-CE75B34FEA94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{985697D2-8E6F-4D65-85A1-CE75B34FEA94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30AFD406-4C4D-4231-84AB-B1AB8F026BC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30AFD406-4C4D-4231-84AB-B1AB8F026BC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30AFD406-4C4D-4231-84AB-B1AB8F026BC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30AFD406-4C4D-4231-84AB-B1AB8F026BC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
