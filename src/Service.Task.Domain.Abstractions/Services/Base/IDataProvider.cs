@@ -1,5 +1,5 @@
 using Kf.Service.Warehouse.Domain.Models.Base;
-using Service.Task.Shared.Models;
+using Service.Tasks.Shared.Models;
 
 namespace Service.Task.Domain.Services.Base;
 

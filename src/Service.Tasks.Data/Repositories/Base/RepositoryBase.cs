@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Service.Task.Shared.Models;
+using Service.Tasks.Shared.Models;
 using Service.Tasks.Data.Models.Base;
 using Sieve.Models;
 using Sieve.Services;
