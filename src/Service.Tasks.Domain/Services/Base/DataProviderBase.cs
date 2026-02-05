@@ -1,5 +1,4 @@
 using AutoMapper;
-using Service.Task.Domain.Services.Base;
 using Service.Tasks.Data.Models.Base;
 using Service.Tasks.Data.Repositories.Base;
 using Service.Tasks.Domain.Models.Base;
@@ -24,7 +23,7 @@ public abstract class DataProviderBase<TModel, TEntity, TRepository> : IDataProv
     protected TRepository Repository { get; }
 
     public async Task<IEnumerable<TModel>> Get(
-        FilterSettings? filter,
+        FilterSettings? filter = null,
         bool withInclude = false,
         CancellationToken cancellationToken = default)
     {

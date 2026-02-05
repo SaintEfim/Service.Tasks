@@ -1,9 +1,9 @@
 using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Service.Task.Domain.Services.Base;
 using Service.Tasks.API.Models.Base;
 using Service.Tasks.Domain.Models.Base;
+using Service.Tasks.Domain.Services.Base;
 using Service.Tasks.Shared.Models;
 
 namespace Service.Tasks.API.Controllers.Base;

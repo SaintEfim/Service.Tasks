@@ -1,7 +1,8 @@
 using Autofac;
-using Service.Task.Domain.Services.Base;
+using FluentValidation;
 using Service.Tasks.Domain.Services.Base;
 using Service.Tasks.Data.SqlLite;
+using Service.Tasks.Domain.Models.Base.Validators;
 
 namespace Service.Tasks.Domain;
 
@@ -19,5 +20,11 @@ public class TaskDomainModule : Module
         builder.RegisterAssemblyTypes(ThisAssembly)
             .AsClosedTypesOf(typeof(IDataManager<>))
             .AsImplementedInterfaces();
+
+        builder.RegisterAssemblyTypes(ThisAssembly)
+            .AsClosedTypesOf(typeof(IValidator<>));
+
+        builder.RegisterAssemblyTypes(ThisAssembly)
+            .AsClosedTypesOf(typeof(IDomainValidator<>));
     }
 }

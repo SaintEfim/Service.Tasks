@@ -1,19 +1,20 @@
 using Service.Tasks.Domain.Models.Base;
+using Service.Tasks.Domain.Models.Base.Validators;
 
-namespace Service.Task.Domain.Services.Base;
+namespace Service.Tasks.Domain.Services.Base;
 
-public interface IDataManager<TModel>
-    where TModel : class, IModel
+public interface IDataManager<TDomain>
+    where TDomain : class, IModel
 {
-    Task<TModel> Create(
-        TModel model,
+    Task<TDomain> Create(
+        TDomain model,
         CancellationToken cancellationToken = default);
 
-    Task<TModel> Update(
-        TModel model,
+    Task<TDomain> Update(
+        TDomain model,
         CancellationToken cancellationToken = default);
 
-    Task<TModel> Delete(
+    Task<TDomain> Delete(
         Guid id,
         CancellationToken cancellationToken = default);
 }

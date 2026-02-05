@@ -23,7 +23,7 @@ public abstract class RepositoryBase<TDbContext, TEntity> : IRepository<TEntity>
     private ISieveProcessor SieveProcessor { get; }
 
     public virtual async Task<IEnumerable<TEntity>> Get(
-        FilterSettings? filter,
+        FilterSettings? filter = null,
         bool withIncludes = false,
         CancellationToken cancellationToken = default)
     {
@@ -31,7 +31,7 @@ public abstract class RepositoryBase<TDbContext, TEntity> : IRepository<TEntity>
 
         if (filter != null)
         {
-            var sieve = new SieveModel { Filters = filter.Filter };
+            var sieve = new SieveModel { Filters = filter.SearchText };
 
             source = SieveProcessor.Apply(sieve, source);
         }
@@ -123,7 +123,7 @@ public abstract class RepositoryBase<TDbContext, TEntity> : IRepository<TEntity>
     }
 
     protected virtual IQueryable<TEntity> BuildBaseQuery(
-        bool withIncludes)
+        bool withIncludes = false)
     {
         var query = DbContext.Set<TEntity>()
             .AsNoTracking();

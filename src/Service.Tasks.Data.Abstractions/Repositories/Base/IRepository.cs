@@ -7,7 +7,7 @@ public interface IRepository<TEntity>
     where TEntity : class, IEntity
 {
     Task<IEnumerable<TEntity>> Get(
-        FilterSettings? filter,
+        FilterSettings? filter = null,
         bool withIncludes = false,
         CancellationToken cancellationToken = default);
 
