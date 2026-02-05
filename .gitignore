@@ -3,6 +3,11 @@
 # Exlcude All Idea files
 **/.idea/**
 
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
 # User specific
 **/.idea/**/workspace.xml
 **/.idea/**/tasks.xml
