@@ -1,8 +1,28 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Tasks.Data", "src\Service.Tasks.Data\Service.Tasks.Data.csproj", "{1A6E2AC4-A36B-4BF7-AB7F-32B97C3A9291}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Tasks.Data.Abstractions", "src\Service.Tasks.Data.Abstractions\Service.Tasks.Data.Abstractions.csproj", "{4A223ABF-F3B5-4980-83AB-E2B88B367CA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Tasks.Data.SqlLite", "src\Service.Tasks.Data.SqlLite\Service.Tasks.Data.SqlLite.csproj", "{C396EFD3-01C2-4466-88E5-9AB2ECEE6146}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1A6E2AC4-A36B-4BF7-AB7F-32B97C3A9291}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A6E2AC4-A36B-4BF7-AB7F-32B97C3A9291}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A6E2AC4-A36B-4BF7-AB7F-32B97C3A9291}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A6E2AC4-A36B-4BF7-AB7F-32B97C3A9291}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A223ABF-F3B5-4980-83AB-E2B88B367CA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A223ABF-F3B5-4980-83AB-E2B88B367CA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A223ABF-F3B5-4980-83AB-E2B88B367CA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A223ABF-F3B5-4980-83AB-E2B88B367CA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C396EFD3-01C2-4466-88E5-9AB2ECEE6146}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C396EFD3-01C2-4466-88E5-9AB2ECEE6146}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C396EFD3-01C2-4466-88E5-9AB2ECEE6146}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C396EFD3-01C2-4466-88E5-9AB2ECEE6146}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
