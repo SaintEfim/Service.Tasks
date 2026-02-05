@@ -15,7 +15,6 @@ public class ApplicationSieveProcessor : SieveProcessor
     protected override SievePropertyMapper MapProperties(
         SievePropertyMapper mapper)
     {
-        return mapper.ApplyConfiguration<ExecutorFilterSortProfile>()
-            .ApplyConfiguration<TaskFilterSortProfile>();
+        return mapper.ApplyConfiguration<TaskFilterSortProfile>();
     }
 }
