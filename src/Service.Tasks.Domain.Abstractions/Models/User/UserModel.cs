@@ -1,9 +1,9 @@
-﻿using Service.Tasks.Data.Models.Base;
+﻿using Service.Tasks.Domain.Models.Base;
 using Service.Tasks.Shared.Models;
 
-namespace Service.Tasks.Data.Models;
+namespace Service.Tasks.Domain.Models.User;
 
-public class UserEntity : EntityBase
+public class UserModel : ModelBase
 {
     public string UserName { get; set; } = string.Empty;
 

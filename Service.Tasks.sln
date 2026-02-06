@@ -16,6 +16,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Tasks.API.Abstracti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Tasks.API", "src\Service.Tasks.API\Service.Tasks.API.csproj", "{0514680C-5A4B-4C72-90BC-169B3BB463A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Tasks.UserPasswordHasher", "src\Service.Tasks.UserPasswordHasher\Service.Tasks.UserPasswordHasher.csproj", "{4CB6265D-03E9-4D45-8897-B966B33FED98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Tasks.UserPasswordHasher.Abstractions", "src\Service.Tasks.UserPasswordHasher.Abstractions\Service.Tasks.UserPasswordHasher.Abstractions.csproj", "{8EA1904F-DF90-4D48-8E37-BFF114AB4DBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Tasks.UserJwtToken", "src\Service.Tasks.UserJwtToken\Service.Tasks.UserJwtToken.csproj", "{3915FFA5-15AB-4A25-A225-C56C8F43604B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Tasks.UserJwtToken.Abstractions", "src\Service.Tasks.UserJwtToken.Abstractions\Service.Tasks.UserJwtToken.Abstractions.csproj", "{A9418766-D480-4F83-A014-39B2E998A002}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,5 +62,21 @@ Global
 		{0514680C-5A4B-4C72-90BC-169B3BB463A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0514680C-5A4B-4C72-90BC-169B3BB463A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0514680C-5A4B-4C72-90BC-169B3BB463A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CB6265D-03E9-4D45-8897-B966B33FED98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CB6265D-03E9-4D45-8897-B966B33FED98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CB6265D-03E9-4D45-8897-B966B33FED98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CB6265D-03E9-4D45-8897-B966B33FED98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EA1904F-DF90-4D48-8E37-BFF114AB4DBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EA1904F-DF90-4D48-8E37-BFF114AB4DBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EA1904F-DF90-4D48-8E37-BFF114AB4DBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EA1904F-DF90-4D48-8E37-BFF114AB4DBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3915FFA5-15AB-4A25-A225-C56C8F43604B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3915FFA5-15AB-4A25-A225-C56C8F43604B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3915FFA5-15AB-4A25-A225-C56C8F43604B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3915FFA5-15AB-4A25-A225-C56C8F43604B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9418766-D480-4F83-A014-39B2E998A002}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9418766-D480-4F83-A014-39B2E998A002}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9418766-D480-4F83-A014-39B2E998A002}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9418766-D480-4F83-A014-39B2E998A002}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
