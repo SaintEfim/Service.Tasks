@@ -46,15 +46,17 @@ public abstract class RepositoryBase<TRepository, TDbContext, TEntity> : IReposi
 
             var query = BuildBaseQuery(withIncludes);
 
-            if (filter is not null)
+            if (filter is null)
             {
-                var sieveModel = new SieveModel
-                {
-                    Filters = filter.SearchText,
-                };
-
-                query = _sieveProcessor.Apply(sieveModel, query);
+                return await query.ToListAsync(cancellationToken);
             }
+
+            var sieveModel = new SieveModel
+            {
+                Filters = filter.SearchText
+            };
+
+            query = _sieveProcessor.Apply(sieveModel, query);
 
             return await query.ToListAsync(cancellationToken);
         }
