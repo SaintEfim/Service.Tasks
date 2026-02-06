@@ -37,6 +37,9 @@ namespace Service.Tasks.Data.SqlLite.Migrations
 
                     b.HasIndex("ParentId");
 
+                    b.HasIndex("Title")
+                        .IsUnique();
+
                     b.ToTable("Tasks");
                 });
 

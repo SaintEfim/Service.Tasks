@@ -34,6 +34,12 @@ namespace Service.Tasks.Data.SqlLite.Migrations
                 name: "IX_Tasks_ParentId",
                 table: "Tasks",
                 column: "ParentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tasks_Title",
+                table: "Tasks",
+                column: "Title",
+                unique: true);
         }
 
         /// <inheritdoc />

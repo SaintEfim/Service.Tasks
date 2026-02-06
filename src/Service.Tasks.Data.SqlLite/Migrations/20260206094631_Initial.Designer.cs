@@ -11,7 +11,7 @@ using Service.Tasks.Data.SqlLite.Context;
 namespace Service.Tasks.Data.SqlLite.Migrations
 {
     [DbContext(typeof(TaskDbContext))]
-    [Migration("20260205184420_Initial")]
+    [Migration("20260206094631_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -39,6 +39,9 @@ namespace Service.Tasks.Data.SqlLite.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ParentId");
+
+                    b.HasIndex("Title")
+                        .IsUnique();
 
                     b.ToTable("Tasks");
                 });

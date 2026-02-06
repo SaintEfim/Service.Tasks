@@ -9,5 +9,7 @@ internal sealed class TaskEntityConfiguration : IEntityTypeConfiguration<TaskEnt
     public void Configure(
         EntityTypeBuilder<TaskEntity> builder)
     {
+        builder.HasIndex(x => x.Title)
+            .IsUnique();
     }
 }
