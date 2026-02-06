@@ -11,7 +11,7 @@ using Service.Tasks.Data.SqlLite.Context;
 namespace Service.Tasks.Data.SqlLite.Migrations
 {
     [DbContext(typeof(TaskDbContext))]
-    [Migration("20260206094631_Initial")]
+    [Migration("20260206095221_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
