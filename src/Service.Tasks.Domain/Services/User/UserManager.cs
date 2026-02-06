@@ -1,21 +1,19 @@
-﻿using AutoMapper;
-using FluentValidation;
-using Service.Tasks.Data.Models;
+﻿using Service.Tasks.Data.Models;
 using Service.Tasks.Data.Repositories;
 using Service.Tasks.Data.Services;
+using Service.Tasks.Domain.Models.Base.Validators;
 using Service.Tasks.Domain.Models.User;
 using Service.Tasks.Domain.Services.Base;
 using Service.Tasks.Shared.Models;
 using Service.Tasks.UserHelpers.Helpers;
-using Service.Tasks.UserJWTToken.Helpers;
+using Service.Tasks.UserJwtToken.Helpers;
 
 namespace Service.Tasks.Domain.Services.User;
 
-public class UserManager
+internal sealed class UserManager
     : ValidatorBase<UserModel>,
         IUserManager
 {
-    private readonly IMapper _mapper;
     private readonly IUserRepository _userRepository;
     private readonly ITransactionService _transactionService;
     private readonly IBCryptPasswordHasher _passwordHasher;
@@ -23,16 +21,14 @@ public class UserManager
     private readonly AuthenticationSettings _authenticationSettings;
 
     public UserManager(
-        IMapper mapper,
         IUserRepository userRepository,
         ITransactionService transactionService,
         IBCryptPasswordHasher passwordHasher,
-        IEnumerable<IValidator> validators,
+        IEnumerable<IDomainValidator<UserModel>> validators,
         IJwtTokenGenerator jwtTokenGenerator,
         AuthenticationSettings authenticationSettings)
         : base(validators)
     {
-        _mapper = mapper;
         _userRepository = userRepository;
         _transactionService = transactionService;
         _passwordHasher = passwordHasher;
@@ -45,14 +41,19 @@ public class UserManager
         ITransaction? transaction = null,
         CancellationToken cancellationToken = default)
     {
+        Validate(user, nameof(IUserManager.Register), cancellationToken);
         return await _transactionService.Execute(async (
             tr,
             token) =>
         {
-            user.UserName = user.UserName.ToLower();
-            user.Password = _passwordHasher.Hash(user.Password);
+            var createItem = new UserEntity
+            {
+                UserName = user.UserName,
+                Role = user.Role,
+                Password = _passwordHasher.Hash(user.Password)
+            };
 
-            await _userRepository.Create(_mapper.Map<UserEntity>(user), tr, token);
+            await _userRepository.Create(createItem, tr, token);
 
             return await Login(user, tr, token);
         }, transaction, cancellationToken);
@@ -65,9 +66,8 @@ public class UserManager
     {
         Validate(user, nameof(IUserManager.Login), cancellationToken);
 
-        var userEntity =
-            (await _userRepository.Get(new FilterSettings { SearchText = $"UserName=={user.UserName.ToLower()}" },
-                transaction: transaction, cancellationToken: cancellationToken)).Single();
+        var userEntity = (await _userRepository.Get(new FilterSettings { SearchText = $"UserName=={user.UserName}" },
+            transaction: transaction, cancellationToken: cancellationToken)).Single();
 
         var accessToken = await _jwtTokenGenerator.GenerateToken(userEntity.Id.ToString(), userEntity.Role,
             _authenticationSettings.AccessSecretKey, TimeSpan.Parse(_authenticationSettings.AccessHours),

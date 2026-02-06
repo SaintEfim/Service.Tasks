@@ -5,9 +5,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Service.Tasks.Shared.Models;
 
-namespace Service.Tasks.UserJWTToken.Helpers;
+namespace Service.Tasks.UserJwtToken.Helpers;
 
-public class JwtTokenGenerator : IJwtTokenGenerator
+internal sealed class JwtTokenGenerator : IJwtTokenGenerator
 {
     private readonly ILogger<JwtTokenGenerator> _logger;
 

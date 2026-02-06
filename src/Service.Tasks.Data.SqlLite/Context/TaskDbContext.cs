@@ -4,7 +4,7 @@ using Service.Tasks.Data.SqlLite.Configurations;
 
 namespace Service.Tasks.Data.SqlLite.Context;
 
-public sealed class TaskDbContext : DbContext
+internal sealed class TaskDbContext : DbContext
 {
     public TaskDbContext(
         DbContextOptions<TaskDbContext> options)

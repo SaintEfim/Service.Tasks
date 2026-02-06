@@ -4,7 +4,7 @@ using Sieve.Services;
 
 namespace Service.Tasks.Data.Profile;
 
-public class ApplicationSieveProcessor : SieveProcessor
+internal sealed class ApplicationSieveProcessor : SieveProcessor
 {
     public ApplicationSieveProcessor(
         IOptions<SieveOptions> options)

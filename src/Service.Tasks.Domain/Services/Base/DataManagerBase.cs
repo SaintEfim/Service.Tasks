@@ -1,5 +1,4 @@
 using AutoMapper;
-using FluentValidation;
 using Service.Tasks.Data.Models.Base;
 using Service.Tasks.Data.Repositories.Base;
 using Service.Tasks.Data.Services;
@@ -8,7 +7,7 @@ using Service.Tasks.Domain.Models.Base.Validators;
 
 namespace Service.Tasks.Domain.Services.Base;
 
-public abstract class DataManagerBase<TDomain, TEntity, TRepository>
+internal abstract class DataManagerBase<TDomain, TEntity, TRepository>
     : ValidatorBase<TDomain>,
         IDataManager<TDomain>
     where TDomain : class, IModel
@@ -18,7 +17,7 @@ public abstract class DataManagerBase<TDomain, TEntity, TRepository>
     protected DataManagerBase(
         IMapper mapper,
         TRepository repository,
-        IEnumerable<IValidator> validators)
+        IEnumerable<IDomainValidator<TDomain>> validators)
         : base(validators)
     {
         Mapper = mapper;

@@ -1,14 +1,15 @@
 ﻿using FluentValidation;
 using Service.Tasks.Domain.Models.Base.Validators;
 using Service.Tasks.Domain.Models.User;
+using Service.Tasks.Shared.Models;
 
 namespace Service.Tasks.Domain.Services.User.Validators;
 
-internal sealed class LoginValidator
+internal sealed class RegisterValidator
     : AbstractValidator<UserModel>,
         IDomainCustomValidator<UserModel>
 {
-    public LoginValidator(
+    public RegisterValidator(
         IUserProvider userProvider)
     {
         RuleFor(x => x)
@@ -17,14 +18,15 @@ internal sealed class LoginValidator
                 context,
                 token) =>
             {
-                var userExists = await userProvider.VerifyUser(user, cancellationToken: token);
+                var userExists = (await userProvider.Get(
+                    new FilterSettings { SearchText = $"UserName=={user.UserName}" }, cancellationToken: token)).Any();
 
-                if (userExists == null)
+                if (userExists)
                 {
-                    context.AddFailure(nameof(UserModel), "User does not exist");
+                    context.AddFailure(nameof(UserModel), "User already exists");
                 }
             });
     }
 
-    public string ActionName => nameof(IUserManager.Login);
+    public string ActionName => nameof(IUserManager.Register);
 }

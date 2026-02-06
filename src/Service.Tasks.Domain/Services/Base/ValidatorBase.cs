@@ -5,16 +5,16 @@ using Service.Tasks.Domain.Models.Base.Validators;
 
 namespace Service.Tasks.Domain.Services.Base;
 
-public abstract class ValidatorBase<TDomain>
+internal abstract class ValidatorBase<TDomain>
     where TDomain : class, IModel
 {
     protected ValidatorBase(
-        IEnumerable<IValidator> validators)
+        IEnumerable<IDomainValidator<TDomain>> validators)
     {
         Validators = validators;
     }
 
-    protected IEnumerable<IValidator> Validators { get; }
+    protected IEnumerable<IDomainValidator<TDomain>> Validators { get; }
 
     protected void Validate<TV>(
         TDomain model,
@@ -46,7 +46,7 @@ public abstract class ValidatorBase<TDomain>
         where TPayload : class, IModel
     {
         var source = Validators.Where(v =>
-                v is IDomainCustomValidator customValidator && customValidator.ActionName == actionName)
+                v is IDomainCustomValidator<TDomain> customValidator && customValidator.ActionName == actionName)
             .Cast<IValidator<TPayload>>();
 
         Validate(model, source, cancellationToken);

@@ -5,11 +5,11 @@ using Service.Tasks.Data.SqlLite;
 using Service.Tasks.Domain.Models.Base.Validators;
 using Service.Tasks.Domain.Services.User;
 using Service.Tasks.UserHelpers;
-using Service.Tasks.UserJWTToken;
+using Service.Tasks.UserJwtToken;
 
 namespace Service.Tasks.Domain;
 
-public class TaskDomainModule : Module
+public sealed class TaskDomainModule : Module
 {
     protected override void Load(
         ContainerBuilder builder)

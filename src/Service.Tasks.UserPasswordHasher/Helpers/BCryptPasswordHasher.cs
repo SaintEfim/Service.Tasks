@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Service.Tasks.UserHelpers.Helpers;
 
-public class BCryptPasswordHasher : IBCryptPasswordHasher
+internal sealed class BCryptPasswordHasher : IBCryptPasswordHasher
 {
     private readonly ILogger<BCryptPasswordHasher> _logger;
 
@@ -29,24 +29,33 @@ public class BCryptPasswordHasher : IBCryptPasswordHasher
         string data,
         string hashedData)
     {
-        if (string.IsNullOrEmpty(data))
-        {
-            throw new NullReferenceException("Data must not be null or empty.");
-        }
+        if (string.IsNullOrEmpty(data) || string.IsNullOrEmpty(hashedData)) return false;
 
-        if (string.IsNullOrEmpty(hashedData))
+        if (hashedData.Length != 60 || !(hashedData.StartsWith("$2a$") || hashedData.StartsWith("$2b$") ||
+                                         hashedData.StartsWith("$2y$")))
         {
-            throw new BcryptAuthenticationException("Hashed data must not be null or empty.");
+            _logger.LogWarning("Invalid BCrypt hash format detected.");
+            return false;
         }
 
         try
         {
             return BCrypt.Net.BCrypt.EnhancedVerify(data, hashedData);
         }
-        catch (Exception ex)
+        catch (SaltParseException)
         {
-            _logger.LogError(ex, "Error verifying hashed data.");
-            throw;
+            try
+            {
+                return BCrypt.Net.BCrypt.Verify(data, hashedData);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        catch
+        {
+            return false;
         }
     }
 }

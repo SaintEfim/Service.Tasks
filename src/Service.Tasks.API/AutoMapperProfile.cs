@@ -2,12 +2,12 @@
 using Service.Tasks.API.Models.Base;
 using Service.Tasks.API.Models.Task;
 using Service.Tasks.API.Models.User;
-using Service.Tasks.Domain.Models;
+using Service.Tasks.Domain.Models.Task;
 using Service.Tasks.Domain.Models.User;
 
 namespace Service.Tasks.API;
 
-public class AutoMapperProfile : Profile
+public sealed class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
     {
@@ -38,9 +38,11 @@ public class AutoMapperProfile : Profile
     {
         CreateMap<UserModel, UserDto>();
 
-        CreateMap<UserLoginDto, UserModel>();
+        CreateMap<UserLoginDto, UserModel>()
+            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName.ToLower()));
 
-        CreateMap<UserRegisterDto, UserModel>();
+        CreateMap<UserRegisterDto, UserModel>()
+            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName.ToLower()));
 
         CreateMap<AuthenticationModel, AuthenticationDto>();
     }

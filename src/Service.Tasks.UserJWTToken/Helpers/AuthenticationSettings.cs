@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Service.Tasks.UserJWTToken.Helpers;
+namespace Service.Tasks.UserJwtToken.Helpers;
 
-public class AuthenticationSettings
+public sealed class AuthenticationSettings
 {
     public AuthenticationSettings(
         IConfiguration config)

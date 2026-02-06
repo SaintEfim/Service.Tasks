@@ -4,7 +4,7 @@ using Service.Tasks.API.Models.Base;
 
 namespace Service.Tasks.API.Handlers;
 
-public class ExceptionHandlerBase : IExceptionHandler
+internal sealed class ExceptionHandlerBase : IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(
         HttpContext httpContext,

@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Service.Tasks.API</name>
+    </assembly>
+    <members>
+        <member name="T:Service.Tasks.API.Controllers.AuthController">
+            <summary>
+            Provides authentication and authorization endpoints for user management.
+            Handles user registration, login, token refresh, and password reset operations.
+            </summary>
+        </member>
+        <member name="M:Service.Tasks.API.Controllers.AuthController.#ctor(AutoMapper.IMapper,Service.Tasks.Domain.Services.User.IUserManager)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Service.Tasks.API.Controllers.AuthController"/> class.
+            </summary>
+            <param name="mapper">The AutoMapper instance for object mapping.</param>
+            <param name="userManager">The user manager service for authentication operations.</param>
+        </member>
+        <member name="M:Service.Tasks.API.Controllers.AuthController.Register(Service.Tasks.API.Models.User.UserRegisterDto,System.Threading.CancellationToken)">
+            <summary>
+            Registers a new user in the system.
+            </summary>
+            <param name="payload">The user registration data.</param>
+            <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
+            <returns>
+            An <see cref="T:Service.Tasks.API.Models.User.AuthenticationDto"/> containing authentication tokens upon successful registration.
+            Returns HTTP 200 on success, HTTP 400 if the request is invalid.
+            </returns>
+        </member>
+        <member name="M:Service.Tasks.API.Controllers.AuthController.Login(Service.Tasks.API.Models.User.UserLoginDto,System.Threading.CancellationToken)">
+            <summary>
+            Authenticates a user and returns access and refresh tokens.
+            </summary>
+            <param name="payload">The user login credentials.</param>
+            <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
+            <returns>
+            An <see cref="T:Service.Tasks.API.Models.User.AuthenticationDto"/> containing authentication tokens upon successful login.
+            Returns HTTP 200 on success, HTTP 400 for invalid request, or HTTP 401 for authentication failure.
+            </returns>
+        </member>
+        <member name="M:Service.Tasks.API.Controllers.AuthController.Refresh(Service.Tasks.API.Models.User.RefreshTokenDto,System.Threading.CancellationToken)">
+            <summary>
+            Refreshes an expired access token using a valid refresh token.
+            </summary>
+            <param name="refreshTokenDto">The refresh token data transfer object.</param>
+            <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
+            <returns>
+            A new <see cref="T:Service.Tasks.API.Models.User.AuthenticationDto"/> with refreshed access and refresh tokens.
+            Returns HTTP 200 on success, HTTP 400 for invalid request, or HTTP 401 for invalid refresh token.
+            </returns>
+        </member>
+        <member name="M:Service.Tasks.API.Controllers.AuthController.ResetPassword(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Resets the password for the currently authenticated user.
+            Requires a valid authentication token.
+            </summary>
+            <param name="newPassword">The new password to set for the user.</param>
+            <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
+            <returns>
+            HTTP 200 on successful password reset.
+            Returns HTTP 400 for invalid request or HTTP 401 if the user is not authenticated.
+            </returns>
+        </member>
+        <member name="M:Service.Tasks.API.Controllers.AuthController.GetCurrentUserId">
+            <summary>
+            Extracts the current user's ID from the authentication token claims.
+            </summary>
+            <returns>The GUID of the currently authenticated user.</returns>
+            <exception cref="T:System.UnauthorizedAccessException">
+            Thrown when the user ID claim is missing or invalid in the authentication token.
+            </exception>
+        </member>
+        <member name="T:Service.Tasks.API.Controllers.TaskController">
+            <summary>
+            Controller for managing task entities.
+            Provides CRUD operations for tasks with support for hierarchical task structures.
+            </summary>
+        </member>
+        <member name="M:Service.Tasks.API.Controllers.TaskController.#ctor(AutoMapper.IMapper,Service.Tasks.Domain.Services.Task.ITaskManager,Service.Tasks.Domain.Services.Task.ITaskProvider)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Service.Tasks.API.Controllers.TaskController"/> class.
+            </summary>
+            <param name="mapper">The AutoMapper instance for object mapping.</param>
+            <param name="manager">The task manager service for business logic operations.</param>
+            <param name="provider">The task provider service for data retrieval operations.</param>
+        </member>
+        <member name="M:Service.Tasks.API.Controllers.TaskController.TaskGet(Service.Tasks.Shared.Models.FilterSettings,System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Retrieves a list of tasks with optional filtering and includes.
+            Requires user authentication.
+            </summary>
+            <param name="filter">Filtering criteria for task retrieval.</param>
+            <param name="withIncludes">Indicates whether to include related entities.</param>
+            <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
+            <returns>
+            A list of <see cref="T:Service.Tasks.API.Models.Task.TaskDto"/> objects matching the filter criteria.
+            Returns HTTP 200 on success.
+            </returns>
+        </member>
+        <member name="M:Service.Tasks.API.Controllers.TaskController.TaskBuildTree(System.Nullable{System.Guid},System.Threading.CancellationToken)">
+            <summary>
+            Retrieves a hierarchical tree structure of tasks.
+            If rootId is provided, returns the tree starting from the specified task.
+            If rootId is null, returns all root-level task trees.
+            Requires user authentication.
+            </summary>
+            <param name="rootId">Optional root task ID to build tree from. If null, returns all root tasks.</param>
+            <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
+            <returns>
+            A hierarchical tree of <see cref="T:Service.Tasks.API.Models.Task.TaskDto"/> objects.
+            Returns HTTP 200 on success, HTTP 404 if the root task is not found.
+            </returns>
+        </member>
+        <member name="M:Service.Tasks.API.Controllers.TaskController.TaskGetById(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Retrieves a single task by its unique identifier.
+            Includes related entities by default.
+            Requires user authentication.
+            </summary>
+            <param name="id">The unique identifier of the task to retrieve.</param>
+            <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
+            <returns>
+            The requested <see cref="T:Service.Tasks.API.Models.Task.TaskDto"/> object.
+            Returns HTTP 200 on success, HTTP 404 if the task is not found.
+            </returns>
+        </member>
+        <member name="M:Service.Tasks.API.Controllers.TaskController.TaskCreate(Service.Tasks.API.Models.Task.TaskCreateDto,System.Threading.CancellationToken)">
+            <summary>
+            Creates a new task entity.
+            Requires Admin role authorization.
+            </summary>
+            <param name="payload">The task creation data transfer object.</param>
+            <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
+            <returns>
+            A <see cref="T:Service.Tasks.API.Models.Base.CreateActionResultDto"/> containing the created task's ID and location header.
+            Returns HTTP 201 on successful creation, HTTP 400 for invalid request data.
+            </returns>
+        </member>
+        <member name="M:Service.Tasks.API.Controllers.TaskController.TaskUpdate(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{Service.Tasks.API.Models.Task.TaskUpdateDto},System.Threading.CancellationToken)">
+            <summary>
+            Updates an existing task using JSON Patch operations.
+            Supports partial updates of task properties.
+            Requires Admin role authorization.
+            </summary>
+            <param name="id">The unique identifier of the task to update.</param>
+            <param name="patchDocument">The JSON Patch document containing update operations.</param>
+            <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
+            <returns>
+            HTTP 200 on successful update.
+            Returns HTTP 400 for invalid patch operations, HTTP 404 if the task is not found.
+            </returns>
+            <remarks>
+            Example patch operations:
+            [
+              { "op": "replace", "path": "/title", "value": "New Task Title" },
+              { "op": "replace", "path": "/description", "value": "Updated description" }
+            ]
+            </remarks>
+        </member>
+        <member name="M:Service.Tasks.API.Controllers.TaskController.TaskDelete(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Deletes a task by its unique identifier.
+            Requires Admin role authorization.
+            </summary>
+            <param name="id">The unique identifier of the task to delete.</param>
+            <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
+            <returns>
+            HTTP 204 on successful deletion.
+            Returns HTTP 400 if deletion is not allowed, HTTP 404 if the task is not found.
+            </returns>
+            <remarks>
+            Deleting a task may cascade to its child tasks based on database configuration.
+            </remarks>
+        </member>
+    </members>
+</doc>

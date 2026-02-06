@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using Service.Tasks.Shared.Models;
 
-namespace Service.Tasks.UserJWTToken.Helpers;
+namespace Service.Tasks.UserJwtToken.Helpers;
 
 public interface IJwtTokenGenerator
 {

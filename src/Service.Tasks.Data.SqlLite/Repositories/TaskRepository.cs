@@ -6,7 +6,7 @@ using Sieve.Services;
 
 namespace Service.Tasks.Data.SqlLite.Repositories;
 
-public class TaskRepository : TaskRepository<DbContext>
+internal sealed class TaskRepository : TaskRepository<DbContext>
 {
     public TaskRepository(
         TaskDbContext dbContext,

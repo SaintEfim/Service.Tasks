@@ -7,7 +7,7 @@ using Service.Tasks.Shared.Models;
 
 namespace Service.Tasks.Domain.Services.Base;
 
-public abstract class DataProviderBase<TModel, TEntity, TRepository> : IDataProvider<TModel>
+internal abstract class DataProviderBase<TModel, TEntity, TRepository> : IDataProvider<TModel>
     where TModel : class, IModel
     where TEntity : class, IEntity
     where TRepository : IRepository<TEntity>

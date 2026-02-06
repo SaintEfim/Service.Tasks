@@ -9,7 +9,7 @@ using Service.Tasks.UserHelpers.Helpers;
 
 namespace Service.Tasks.Domain.Services.User;
 
-public class UserProvider
+internal sealed class UserProvider
     : DataProviderBase<UserModel, UserEntity, IUserRepository>,
         IUserProvider
 {

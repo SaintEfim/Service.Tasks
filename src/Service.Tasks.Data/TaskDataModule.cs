@@ -5,7 +5,7 @@ using Sieve.Services;
 
 namespace Service.Tasks.Data;
 
-public class TaskDataModule : Module
+public sealed class TaskDataModule : Module
 {
     protected override void Load(
         ContainerBuilder builder)

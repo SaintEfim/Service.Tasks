@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Service.Tasks.Data.SqlLite.Context;
 
-public class SqlLiteDbContextFactoryBase<TDbContext>
+internal class SqlLiteDbContextFactoryBase<TDbContext>
     where TDbContext : DbContext
 {
     private readonly IConfiguration _configuration;
@@ -25,6 +25,10 @@ public class SqlLiteDbContextFactoryBase<TDbContext>
         optionsBuilder.EnableDetailedErrors();
         optionsBuilder.EnableSensitiveDataLogging();
 
-        return (TDbContext) Activator.CreateInstance(typeof(TDbContext), optionsBuilder.Options)!;
+        var dbContext = (TDbContext) Activator.CreateInstance(typeof(TDbContext), optionsBuilder.Options)!;
+
+        dbContext.Database.Migrate();
+
+        return dbContext;
     }
 }
