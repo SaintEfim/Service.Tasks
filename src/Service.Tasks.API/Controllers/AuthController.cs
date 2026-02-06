@@ -52,22 +52,20 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("refresh")]
-    [Authorize]
     [OpenApiOperation(nameof(Refresh))]
     [SwaggerResponse(Status200OK, typeof(AuthenticationDto))]
     [SwaggerResponse(Status400BadRequest, typeof(ErrorDto))]
     [SwaggerResponse(Status401Unauthorized, typeof(ErrorDto))]
     public async Task<ActionResult<AuthenticationDto>> Refresh(
-        [FromBody] string refreshToken,
+        RefreshTokenDto refreshTokenDto,
         CancellationToken cancellationToken = default)
     {
-        var result = await _userManager.Refresh(refreshToken, null, cancellationToken);
+        var result = await _userManager.Refresh(refreshTokenDto.RefreshTocken, cancellationToken: cancellationToken);
         return Ok(_mapper.Map<AuthenticationDto>(result));
     }
 
-    [Authorize]
-    [Authorize]
     [HttpPost("reset-password")]
+    [Authorize]
     [OpenApiOperation(nameof(ResetPassword))]
     [SwaggerResponse(Status200OK, typeof(void))]
     [SwaggerResponse(Status400BadRequest, typeof(ErrorDto))]
