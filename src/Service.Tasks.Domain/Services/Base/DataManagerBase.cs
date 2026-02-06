@@ -18,7 +18,7 @@ public abstract class DataManagerBase<TDomain, TEntity, TRepository>
     protected DataManagerBase(
         IMapper mapper,
         TRepository repository,
-        IEnumerable<IValidator> validators)
+        IEnumerable<IDomainValidator<TDomain>> validators)
         : base(validators)
     {
         Mapper = mapper;

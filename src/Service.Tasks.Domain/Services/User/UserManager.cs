@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using FluentValidation;
 using Service.Tasks.Data.Models;
 using Service.Tasks.Data.Repositories;
 using Service.Tasks.Data.Services;
+using Service.Tasks.Domain.Models.Base.Validators;
 using Service.Tasks.Domain.Models.User;
 using Service.Tasks.Domain.Services.Base;
 using Service.Tasks.Shared.Models;
@@ -27,7 +27,7 @@ public class UserManager
         IUserRepository userRepository,
         ITransactionService transactionService,
         IBCryptPasswordHasher passwordHasher,
-        IEnumerable<IValidator> validators,
+        IEnumerable<IDomainValidator<UserModel>> validators,
         IJwtTokenGenerator jwtTokenGenerator,
         AuthenticationSettings authenticationSettings)
         : base(validators)
@@ -45,6 +45,7 @@ public class UserManager
         ITransaction? transaction = null,
         CancellationToken cancellationToken = default)
     {
+        Validate(user, nameof(IUserManager.Register), cancellationToken);
         return await _transactionService.Execute(async (
             tr,
             token) =>

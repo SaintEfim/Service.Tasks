@@ -9,12 +9,12 @@ public abstract class ValidatorBase<TDomain>
     where TDomain : class, IModel
 {
     protected ValidatorBase(
-        IEnumerable<IValidator> validators)
+        IEnumerable<IDomainValidator<TDomain>> validators)
     {
         Validators = validators;
     }
 
-    protected IEnumerable<IValidator> Validators { get; }
+    protected IEnumerable<IDomainValidator<TDomain>> Validators { get; }
 
     protected void Validate<TV>(
         TDomain model,

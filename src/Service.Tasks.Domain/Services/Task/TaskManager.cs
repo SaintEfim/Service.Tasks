@@ -4,6 +4,7 @@ using Service.Tasks.Data.Models;
 using Service.Tasks.Data.Repositories;
 using Service.Tasks.Data.Services;
 using Service.Tasks.Domain.Models;
+using Service.Tasks.Domain.Models.Base.Validators;
 using Service.Tasks.Domain.Services.Base;
 using Service.Tasks.Shared.Models;
 
@@ -18,7 +19,7 @@ public class TaskManager
     public TaskManager(
         IMapper mapper,
         ITaskRepository repository,
-        IEnumerable<IValidator> validators,
+        IEnumerable<IDomainValidator<TaskModel>> validators,
         ITransactionService transactionService)
         : base(mapper, repository, validators)
     {
