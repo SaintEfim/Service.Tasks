@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
@@ -24,6 +25,7 @@ public class TaskController : ControllerCrudBase<TaskDto, TaskModel, ITaskManage
     }
 
     [HttpGet]
+    [Authorize]
     [OpenApiOperation(nameof(TaskGet))]
     [SwaggerResponse(Status200OK, typeof(List<TaskDto>))]
     public async Task<ActionResult<List<TaskDto>>> TaskGet(
@@ -35,6 +37,7 @@ public class TaskController : ControllerCrudBase<TaskDto, TaskModel, ITaskManage
     }
 
     [HttpGet("tree", Name = nameof(TaskBuildTree))]
+    [Authorize]
     [OpenApiOperation(nameof(TaskBuildTree))]
     [SwaggerResponse(Status200OK, typeof(TaskDto))]
     [SwaggerResponse(Status404NotFound, typeof(ErrorDto))]
@@ -48,6 +51,7 @@ public class TaskController : ControllerCrudBase<TaskDto, TaskModel, ITaskManage
     }
 
     [HttpGet("{id:guid}", Name = nameof(TaskGetById))]
+    [Authorize]
     [OpenApiOperation(nameof(TaskGetById))]
     [SwaggerResponse(Status200OK, typeof(TaskDto))]
     [SwaggerResponse(Status404NotFound, typeof(ErrorDto))]
@@ -59,6 +63,7 @@ public class TaskController : ControllerCrudBase<TaskDto, TaskModel, ITaskManage
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     [OpenApiOperation(nameof(TaskCreate))]
     [SwaggerResponse(Status201Created, typeof(CreateActionResultDto))]
     [SwaggerResponse(Status400BadRequest, typeof(ErrorDto))]
@@ -70,6 +75,7 @@ public class TaskController : ControllerCrudBase<TaskDto, TaskModel, ITaskManage
     }
 
     [HttpPatch("{id:guid}")]
+    [Authorize(Roles = "Admin")]
     [OpenApiOperation(nameof(TaskUpdate))]
     [SwaggerResponse(Status200OK, typeof(void))]
     [SwaggerResponse(Status404NotFound, typeof(ErrorDto))]
@@ -83,6 +89,7 @@ public class TaskController : ControllerCrudBase<TaskDto, TaskModel, ITaskManage
     }
 
     [HttpDelete("{id:guid}")]
+    [Authorize(Roles = "Admin")]
     [OpenApiOperation(nameof(TaskDelete))]
     [SwaggerResponse(Status204NoContent, typeof(void))]
     [SwaggerResponse(Status400BadRequest, typeof(ErrorDto))]

@@ -65,8 +65,9 @@ public class UserManager
     {
         Validate(user, nameof(IUserManager.Login), cancellationToken);
 
-        var userEntity = (await _userRepository.Get(new FilterSettings { SearchText = $"UserName=={user.UserName}" },
-            transaction: transaction, cancellationToken: cancellationToken)).Single();
+        var userEntity =
+            (await _userRepository.Get(new FilterSettings { SearchText = $"UserName=={user.UserName.ToLower()}" },
+                transaction: transaction, cancellationToken: cancellationToken)).Single();
 
         var accessToken = await _jwtTokenGenerator.GenerateToken(userEntity.Id.ToString(), userEntity.Role,
             _authenticationSettings.AccessSecretKey, TimeSpan.Parse(_authenticationSettings.AccessHours),

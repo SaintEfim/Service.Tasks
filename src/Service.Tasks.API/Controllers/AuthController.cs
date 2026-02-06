@@ -52,6 +52,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("refresh")]
+    [Authorize]
     [OpenApiOperation(nameof(Refresh))]
     [SwaggerResponse(Status200OK, typeof(AuthenticationDto))]
     [SwaggerResponse(Status400BadRequest, typeof(ErrorDto))]
@@ -64,6 +65,7 @@ public class AuthController : ControllerBase
         return Ok(_mapper.Map<AuthenticationDto>(result));
     }
 
+    [Authorize]
     [Authorize]
     [HttpPost("reset-password")]
     [OpenApiOperation(nameof(ResetPassword))]

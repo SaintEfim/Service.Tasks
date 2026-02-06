@@ -39,6 +39,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseRouting();
 app.UseExceptionHandler();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 
 await app.RunAsync();
