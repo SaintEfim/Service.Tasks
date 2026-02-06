@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Service.Tasks.UserJwtToken.Abstractions\Service.Tasks.UserJWTToken.Abstractions.csproj" />
+      <ProjectReference Include="..\Service.Tasks.UserJwtToken.Abstractions\Service.Tasks.UserJwtToken.Abstractions.csproj" />
     </ItemGroup>
 
 </Project>

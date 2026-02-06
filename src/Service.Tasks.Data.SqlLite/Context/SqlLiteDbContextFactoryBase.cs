@@ -25,6 +25,10 @@ public class SqlLiteDbContextFactoryBase<TDbContext>
         optionsBuilder.EnableDetailedErrors();
         optionsBuilder.EnableSensitiveDataLogging();
 
-        return (TDbContext) Activator.CreateInstance(typeof(TDbContext), optionsBuilder.Options)!;
+        var dbContext = (TDbContext) Activator.CreateInstance(typeof(TDbContext), optionsBuilder.Options)!;
+
+        dbContext.Database.Migrate();
+
+        return dbContext;
     }
 }

@@ -7,7 +7,7 @@ using Service.Tasks.Domain.Models.User;
 using Service.Tasks.Domain.Services.Base;
 using Service.Tasks.Shared.Models;
 using Service.Tasks.UserHelpers.Helpers;
-using Service.Tasks.UserJWTToken.Helpers;
+using Service.Tasks.UserJwtToken.Helpers;
 
 namespace Service.Tasks.Domain.Services.User;
 

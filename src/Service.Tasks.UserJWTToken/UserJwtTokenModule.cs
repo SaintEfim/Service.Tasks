@@ -1,8 +1,8 @@
 ﻿using Autofac;
 using Microsoft.Extensions.Configuration;
-using Service.Tasks.UserJWTToken.Helpers;
+using Service.Tasks.UserJwtToken.Helpers;
 
-namespace Service.Tasks.UserJWTToken;
+namespace Service.Tasks.UserJwtToken;
 
 public class UserJwtTokenModule : Module
 {
