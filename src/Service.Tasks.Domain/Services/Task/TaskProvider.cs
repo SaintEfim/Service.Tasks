@@ -8,7 +8,7 @@ using Service.Tasks.Shared.Models;
 
 namespace Service.Tasks.Domain.Services.Task;
 
-public class TaskProvider
+internal sealed class TaskProvider
     : DataProviderBase<TaskModel, TaskEntity, ITaskRepository>,
         ITaskProvider
 {

@@ -6,7 +6,7 @@ using Service.Tasks.Shared.Models;
 
 namespace Service.Tasks.Domain.Services.Task.Validators;
 
-public class TaskCreateValidator
+internal sealed class TaskCreateValidator
     : AbstractValidator<TaskModel>,
         IDomainCreateValidator<TaskModel>
 {

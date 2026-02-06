@@ -11,7 +11,7 @@ using static Microsoft.AspNetCore.Http.StatusCodes;
 namespace Service.Tasks.API.Controllers;
 
 [Route("api/v1/Auth")]
-public class AuthController : ControllerBase
+internal sealed class AuthController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly IUserManager _userManager;
@@ -81,7 +81,8 @@ public class AuthController : ControllerBase
 
     private Guid GetCurrentUserId()
     {
-        var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
+        var userIdClaim = User.Claims.FirstOrDefault(c =>
+            c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
         if (userIdClaim == null || !Guid.TryParse(userIdClaim.Value, out var userId))
         {
             throw new UnauthorizedAccessException("Invalid user ID in token");

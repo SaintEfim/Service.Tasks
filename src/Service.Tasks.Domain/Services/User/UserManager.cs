@@ -10,7 +10,7 @@ using Service.Tasks.UserJwtToken.Helpers;
 
 namespace Service.Tasks.Domain.Services.User;
 
-public class UserManager
+internal sealed class UserManager
     : ValidatorBase<UserModel>,
         IUserManager
 {

@@ -3,7 +3,7 @@ using Sieve.Services;
 
 namespace Service.Tasks.Data.Profile;
 
-public class TaskFilterSortProfile : ISieveConfiguration
+internal sealed class TaskFilterSortProfile : ISieveConfiguration
 {
     public void Configure(
         SievePropertyMapper mapper)

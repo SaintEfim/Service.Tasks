@@ -7,7 +7,7 @@ using Service.Tasks.Domain.Models.User;
 
 namespace Service.Tasks.API;
 
-public class AutoMapperProfile : Profile
+public sealed class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
     {

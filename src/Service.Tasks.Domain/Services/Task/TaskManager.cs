@@ -9,7 +9,7 @@ using Service.Tasks.Shared.Models;
 
 namespace Service.Tasks.Domain.Services.Task;
 
-public class TaskManager
+internal sealed class TaskManager
     : DataManagerBase<TaskModel, TaskEntity, ITaskRepository>,
         ITaskManager
 {

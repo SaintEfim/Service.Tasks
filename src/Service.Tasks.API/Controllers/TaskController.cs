@@ -14,7 +14,7 @@ using static Microsoft.AspNetCore.Http.StatusCodes;
 namespace Service.Tasks.API.Controllers;
 
 [Route("api/v1/Tasks")]
-public class TaskController : ControllerCrudBase<TaskDto, TaskModel, ITaskManager, ITaskProvider>
+internal sealed class TaskController : ControllerCrudBase<TaskDto, TaskModel, ITaskManager, ITaskProvider>
 {
     public TaskController(
         IMapper mapper,

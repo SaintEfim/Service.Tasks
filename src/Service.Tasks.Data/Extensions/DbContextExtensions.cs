@@ -3,7 +3,7 @@ using Service.Tasks.Data.Services;
 
 namespace Service.Tasks.Data.Extensions;
 
-public static class DbContextExtensions
+internal static class DbContextExtensions
 {
     public static async Task UseTransaction(
         this DbContext context,

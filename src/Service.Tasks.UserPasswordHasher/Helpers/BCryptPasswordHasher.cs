@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Service.Tasks.UserHelpers.Helpers;
 
-public class BCryptPasswordHasher : IBCryptPasswordHasher
+internal sealed class BCryptPasswordHasher : IBCryptPasswordHasher
 {
     private readonly ILogger<BCryptPasswordHasher> _logger;
 

@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Service.Tasks.Data.SqlLite.Context;
 
-public class SqlLiteDbContextFactoryBase<TDbContext>
+internal class SqlLiteDbContextFactoryBase<TDbContext>
     where TDbContext : DbContext
 {
     private readonly IConfiguration _configuration;

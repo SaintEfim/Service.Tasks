@@ -7,7 +7,7 @@ using Sieve.Services;
 
 namespace Service.Tasks.Data.Repositories;
 
-public class TaskRepository<TDbContext>
+public abstract class TaskRepository<TDbContext>
     : RepositoryBase<TaskRepository<TDbContext>, TDbContext, TaskEntity>,
         ITaskRepository
     where TDbContext : DbContext

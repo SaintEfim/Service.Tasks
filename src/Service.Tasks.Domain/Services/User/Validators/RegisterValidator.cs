@@ -5,7 +5,7 @@ using Service.Tasks.Shared.Models;
 
 namespace Service.Tasks.Domain.Services.User.Validators;
 
-public class RegisterValidator
+internal sealed class RegisterValidator
     : AbstractValidator<UserModel>,
         IDomainCustomValidator<UserModel>
 {
@@ -19,8 +19,7 @@ public class RegisterValidator
                 token) =>
             {
                 var userExists = (await userProvider.Get(
-                    new FilterSettings { SearchText = $"UserName=={user.UserName}" },
-                    cancellationToken: token)).Any();
+                    new FilterSettings { SearchText = $"UserName=={user.UserName}" }, cancellationToken: token)).Any();
 
                 if (userExists)
                 {

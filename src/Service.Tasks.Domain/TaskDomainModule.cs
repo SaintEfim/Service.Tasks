@@ -9,7 +9,7 @@ using Service.Tasks.UserJwtToken;
 
 namespace Service.Tasks.Domain;
 
-public class TaskDomainModule : Module
+public sealed class TaskDomainModule : Module
 {
     protected override void Load(
         ContainerBuilder builder)

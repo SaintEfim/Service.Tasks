@@ -5,7 +5,7 @@ using Service.Tasks.Domain.Models.Base.Validators;
 
 namespace Service.Tasks.Domain.Services.Base;
 
-public abstract class ValidatorBase<TDomain>
+internal abstract class ValidatorBase<TDomain>
     where TDomain : class, IModel
 {
     protected ValidatorBase(

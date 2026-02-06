@@ -3,7 +3,7 @@ using Service.Tasks.UserHelpers.Helpers;
 
 namespace Service.Tasks.UserHelpers;
 
-public class UserPasswordHasherModule : Module
+public sealed class UserPasswordHasherModule : Module
 {
     protected override void Load(
         ContainerBuilder builder)

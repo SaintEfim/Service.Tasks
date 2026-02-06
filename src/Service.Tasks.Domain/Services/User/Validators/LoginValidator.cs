@@ -4,7 +4,7 @@ using Service.Tasks.Domain.Models.User;
 
 namespace Service.Tasks.Domain.Services.User.Validators;
 
-public class LoginValidator
+internal sealed class LoginValidator
     : AbstractValidator<UserModel>,
         IDomainCustomValidator<UserModel>
 {
