@@ -34,6 +34,19 @@ public class TaskController : ControllerCrudBase<TaskDto, TaskModel, ITaskManage
         return Ok(await Get(filter, withIncludes, cancellationToken));
     }
 
+    [HttpGet("tree", Name = nameof(TaskBuildTree))]
+    [OpenApiOperation(nameof(TaskBuildTree))]
+    [SwaggerResponse(Status200OK, typeof(TaskDto))]
+    [SwaggerResponse(Status404NotFound, typeof(ErrorDto))]
+    public async Task<IActionResult> TaskBuildTree(
+        [FromQuery] Guid? rootId = null,
+        CancellationToken cancellationToken = default)
+    {
+        var data = await Provider.ExportTree(rootId, cancellationToken: cancellationToken);
+
+        return Ok(Mapper.Map<List<TaskDto>>(data));
+    }
+
     [HttpGet("{id:guid}", Name = nameof(TaskGetById))]
     [OpenApiOperation(nameof(TaskGetById))]
     [SwaggerResponse(Status200OK, typeof(TaskDto))]
