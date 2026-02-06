@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Service.Tasks.Data.Models;
 using Service.Tasks.Data.Repositories;
 using Service.Tasks.Data.Services;
@@ -17,7 +18,7 @@ public class TaskManager
     public TaskManager(
         IMapper mapper,
         ITaskRepository repository,
-        IEnumerable<IDomainValidator<TaskModel>> validators,
+        IEnumerable<IValidator> validators,
         ITransactionService transactionService)
         : base(mapper, repository, validators)
     {

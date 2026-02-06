@@ -30,10 +30,36 @@ namespace Service.Tasks.Data.SqlLite.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    UserName = table.Column<string>(type: "TEXT", nullable: false),
+                    Role = table.Column<string>(type: "TEXT", nullable: false),
+                    Password = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Tasks_ParentId",
                 table: "Tasks",
                 column: "ParentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tasks_Title",
+                table: "Tasks",
+                column: "Title",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_UserName",
+                table: "Users",
+                column: "UserName",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -41,6 +67,9 @@ namespace Service.Tasks.Data.SqlLite.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Tasks");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

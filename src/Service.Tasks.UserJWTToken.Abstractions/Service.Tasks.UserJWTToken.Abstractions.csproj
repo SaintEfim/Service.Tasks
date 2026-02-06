@@ -4,7 +4,8 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>Service.Tasks.API</RootNamespace>
+        <RootNamespace>Service.Tasks.UserJwtToken</RootNamespace>
+        <AssemblyName>Service.Tasks.UserJwtToken.Abstractions</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>

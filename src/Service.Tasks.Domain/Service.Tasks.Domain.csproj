@@ -16,6 +16,9 @@
       <ProjectReference Include="..\Service.Tasks.Domain.Abstractions\Service.Tasks.Domain.Abstractions.csproj" />
       <ProjectReference Include="..\Service.Tasks.Data.Abstractions\Service.Tasks.Data.Abstractions.csproj" />
       <ProjectReference Include="..\Service.Tasks.Data.SqlLite\Service.Tasks.Data.SqlLite.csproj" />
+      <ProjectReference Include="..\Service.Tasks.UserJWTToken\Service.Tasks.UserJWTToken.csproj" />
+      <ProjectReference Include="..\Service.Tasks.UserPasswordHasher.Abstractions\Service.Tasks.UserPasswordHasher.Abstractions.csproj" />
+      <ProjectReference Include="..\Service.Tasks.UserPasswordHasher\Service.Tasks.UserPasswordHasher.csproj" />
     </ItemGroup>
 
 </Project>

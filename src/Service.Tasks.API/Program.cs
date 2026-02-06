@@ -1,6 +1,7 @@
 using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Service.Tasks.API.Extensions;
 using Service.Tasks.API.Handlers;
 using Service.Tasks.Domain;
 
@@ -10,14 +11,18 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
 builder.Services
     .AddControllers()
-    .AddNewtonsoftJson();
-
-builder.Services.AddOpenApiDocument();
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+    });
 
 builder.Services.AddExceptionHandler<ExceptionHandlerBase>();
 builder.Services.AddProblemDetails();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly, Assembly.GetExecutingAssembly());
+
+builder.Services.AddMySwagger();
+builder.Services.AddMyAuthentication(builder.Configuration);
 
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
@@ -34,6 +39,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseRouting();
 app.UseExceptionHandler();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 
 await app.RunAsync();

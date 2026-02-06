@@ -1,13 +1,21 @@
 ﻿using AutoMapper;
 using Service.Tasks.API.Models.Base;
 using Service.Tasks.API.Models.Task;
+using Service.Tasks.API.Models.User;
 using Service.Tasks.Domain.Models;
+using Service.Tasks.Domain.Models.User;
 
 namespace Service.Tasks.API;
 
 public class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
+    {
+        MapTask();
+        MapUser();
+    }
+
+    private void MapTask()
     {
         CreateMap<TaskModel, TaskDto>()
             .ReverseMap();
@@ -24,5 +32,16 @@ public class AutoMapperProfile : Profile
                 .ToList()));
 
         CreateMap<TaskModel, CreateActionResultDto>();
+    }
+
+    private void MapUser()
+    {
+        CreateMap<UserModel, UserDto>();
+
+        CreateMap<UserLoginDto, UserModel>();
+
+        CreateMap<UserRegisterDto, UserModel>();
+
+        CreateMap<AuthenticationModel, AuthenticationDto>();
     }
 }

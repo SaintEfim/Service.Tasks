@@ -37,7 +37,36 @@ namespace Service.Tasks.Data.SqlLite.Migrations
 
                     b.HasIndex("ParentId");
 
+                    b.HasIndex("Title")
+                        .IsUnique();
+
                     b.ToTable("Tasks");
+                });
+
+            modelBuilder.Entity("Service.Tasks.Data.Models.UserEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserName")
+                        .IsUnique();
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Service.Tasks.Data.Models.TaskEntity", b =>

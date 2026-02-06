@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using AutoMapper;
 using FluentValidation;
 using Service.Tasks.Data.Models.Base;
@@ -9,7 +8,9 @@ using Service.Tasks.Domain.Models.Base.Validators;
 
 namespace Service.Tasks.Domain.Services.Base;
 
-public abstract class DataManagerBase<TDomain, TEntity, TRepository> : IDataManager<TDomain>
+public abstract class DataManagerBase<TDomain, TEntity, TRepository>
+    : ValidatorBase<TDomain>,
+        IDataManager<TDomain>
     where TDomain : class, IModel
     where TEntity : class, IEntity
     where TRepository : IRepository<TEntity>
@@ -17,14 +18,12 @@ public abstract class DataManagerBase<TDomain, TEntity, TRepository> : IDataMana
     protected DataManagerBase(
         IMapper mapper,
         TRepository repository,
-        IEnumerable<IDomainValidator<TDomain>> validators)
+        IEnumerable<IValidator> validators)
+        : base(validators)
     {
         Mapper = mapper;
         Repository = repository;
-        Validators = validators;
     }
-
-    protected IEnumerable<IDomainValidator<TDomain>> Validators { get; }
 
     protected IMapper Mapper { get; }
     protected TRepository Repository { get; }
@@ -88,34 +87,5 @@ public abstract class DataManagerBase<TDomain, TEntity, TRepository> : IDataMana
     {
         var deletedEntity = await Repository.Delete(id, transaction, cancellationToken);
         return Mapper.Map<TDomain>(deletedEntity);
-    }
-
-    protected void Validate<TV>(
-        TDomain model,
-        CancellationToken cancellationToken = default)
-        where TV : IDomainValidator<TDomain>
-    {
-        var validators = Validators.Where(v => v is TV)
-            .Cast<IValidator<TDomain>>()
-            .ToList();
-
-        Validate(model, validators, cancellationToken);
-    }
-
-    private static void Validate<TPayload>(
-        TPayload model,
-        IEnumerable<IValidator<TPayload>> source,
-        CancellationToken cancellationToken = default)
-        where TPayload : IModel
-    {
-        var failures = source.Select(async x => await x.ValidateAsync(model, cancellationToken))
-            .SelectMany(x => x.Result.Errors)
-            .Where(x => x != null)
-            .ToImmutableList();
-
-        if (!failures.IsEmpty)
-        {
-            throw new ValidationException(failures);
-        }
     }
 }

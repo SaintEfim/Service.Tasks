@@ -4,12 +4,15 @@ using Service.Tasks.Data.Models;
 
 namespace Service.Tasks.Data.SqlLite.Configurations;
 
-internal sealed class TaskEntityConfiguration : IEntityTypeConfiguration<TaskEntity>
+internal sealed class UserEntityConfiguration : IEntityTypeConfiguration<UserEntity>
 {
     public void Configure(
-        EntityTypeBuilder<TaskEntity> builder)
+        EntityTypeBuilder<UserEntity> builder)
     {
-        builder.HasIndex(x => x.Title)
+        builder.Property(x => x.Role)
+            .HasConversion<string>();
+
+        builder.HasIndex(x => x.UserName)
             .IsUnique();
     }
 }

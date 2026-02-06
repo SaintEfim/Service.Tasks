@@ -2,7 +2,7 @@
 using Service.Tasks.Domain.Models;
 using Service.Tasks.Domain.Services.Base;
 
-namespace Service.Tasks.Domain.Services;
+namespace Service.Tasks.Domain.Services.Task;
 
 public interface ITaskProvider : IDataProvider<TaskModel>
 {
