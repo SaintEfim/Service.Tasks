@@ -17,9 +17,11 @@ RUN dotnet restore src/Service.Tasks.API/Service.Tasks.API.csproj
 
 COPY src/ .
 
-FROM build AS publish
 WORKDIR /src/Service.Tasks.API
-RUN dotnet publish -c Release -o /app/publish --no-restore /p:UseAppHost=false
+RUN dotnet build -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish -c Release -o /app/publish /p:UseAppHost=false
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
