@@ -9,6 +9,9 @@ internal sealed class UserEntityConfiguration : IEntityTypeConfiguration<UserEnt
     public void Configure(
         EntityTypeBuilder<UserEntity> builder)
     {
+        builder.Property(x => x.Role)
+            .HasConversion<string>();
+
         builder.HasIndex(x => x.UserName)
             .IsUnique();
     }
