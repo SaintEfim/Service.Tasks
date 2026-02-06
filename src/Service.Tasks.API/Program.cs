@@ -1,6 +1,7 @@
 using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Service.Tasks.API.Extensions;
 using Service.Tasks.API.Handlers;
 using Service.Tasks.Domain;
 
@@ -15,12 +16,13 @@ builder.Services
         options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
     });
 
-builder.Services.AddOpenApiDocument();
-
 builder.Services.AddExceptionHandler<ExceptionHandlerBase>();
 builder.Services.AddProblemDetails();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly, Assembly.GetExecutingAssembly());
+
+builder.Services.AddMySwagger();
+builder.Services.AddMyAuthentication(builder.Configuration);
 
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {

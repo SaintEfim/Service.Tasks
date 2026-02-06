@@ -6,7 +6,6 @@ using Service.Tasks.Domain.Models.Base.Validators;
 using Service.Tasks.Domain.Services.User;
 using Service.Tasks.UserHelpers;
 using Service.Tasks.UserJWTToken;
-using Service.Tasks.UserJWTToken.Helpers;
 
 namespace Service.Tasks.Domain;
 
