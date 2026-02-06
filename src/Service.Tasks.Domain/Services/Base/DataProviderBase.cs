@@ -1,6 +1,7 @@
 using AutoMapper;
 using Service.Tasks.Data.Models.Base;
 using Service.Tasks.Data.Repositories.Base;
+using Service.Tasks.Data.Services;
 using Service.Tasks.Domain.Models.Base;
 using Service.Tasks.Shared.Models;
 
@@ -22,19 +23,22 @@ public abstract class DataProviderBase<TModel, TEntity, TRepository> : IDataProv
     protected IMapper Mapper { get; }
     protected TRepository Repository { get; }
 
-    public virtual  async Task<IEnumerable<TModel>> Get(
+    public virtual async Task<IEnumerable<TModel>> Get(
         FilterSettings? filter = null,
         bool withInclude = false,
+        ITransaction? transaction = null,
         CancellationToken cancellationToken = default)
     {
-        return Mapper.Map<IEnumerable<TModel>>(await Repository.Get(filter, withInclude, cancellationToken));
+        return Mapper.Map<IEnumerable<TModel>>(
+            await Repository.Get(filter, withInclude, transaction, cancellationToken));
     }
 
-    public virtual  async Task<TModel> GetOneById(
+    public virtual async Task<TModel> GetOneById(
         Guid id,
         bool withInclude = false,
+        ITransaction? transaction = null,
         CancellationToken cancellationToken = default)
     {
-        return Mapper.Map<TModel>(await Repository.GetOneById(id, withInclude, cancellationToken));
+        return Mapper.Map<TModel>(await Repository.GetOneById(id, withInclude, transaction, cancellationToken));
     }
 }

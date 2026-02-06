@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Service.Tasks.Data.Repositories;
 using Service.Tasks.Data.SqlLite.Context;
 using Sieve.Services;
@@ -9,8 +10,9 @@ public class TaskRepository : TaskRepository<DbContext>
 {
     public TaskRepository(
         TaskDbContext dbContext,
-        ISieveProcessor sieveProcessor)
-        : base(dbContext, sieveProcessor)
+        ISieveProcessor sieveProcessor,
+        ILogger<TaskRepository> logger)
+        : base(dbContext, logger, sieveProcessor)
     {
     }
 }

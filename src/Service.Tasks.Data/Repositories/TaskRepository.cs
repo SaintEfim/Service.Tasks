@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Service.Tasks.Data.Models;
 using Service.Tasks.Data.Repositories.Base;
 using Service.Tasks.Shared.Models;
@@ -7,14 +8,15 @@ using Sieve.Services;
 namespace Service.Tasks.Data.Repositories;
 
 public class TaskRepository<TDbContext>
-    : RepositoryBase<TDbContext, TaskEntity>,
+    : RepositoryBase<TaskRepository<TDbContext>, TDbContext, TaskEntity>,
         ITaskRepository
     where TDbContext : DbContext
 {
     protected TaskRepository(
         TDbContext dbContext,
+        ILogger<TaskRepository<TDbContext>> logger,
         ISieveProcessor sieveProcessor)
-        : base(dbContext, sieveProcessor)
+        : base(dbContext, logger, sieveProcessor)
     {
     }
 
