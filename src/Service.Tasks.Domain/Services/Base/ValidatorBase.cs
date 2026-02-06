@@ -46,7 +46,7 @@ public abstract class ValidatorBase<TDomain>
         where TPayload : class, IModel
     {
         var source = Validators.Where(v =>
-                v is IDomainCustomValidator customValidator && customValidator.ActionName == actionName)
+                v is IDomainCustomValidator<TDomain> customValidator && customValidator.ActionName == actionName)
             .Cast<IValidator<TPayload>>();
 
         Validate(model, source, cancellationToken);

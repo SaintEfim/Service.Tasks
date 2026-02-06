@@ -1,6 +1,6 @@
 using Service.Tasks.Domain.Models.Base;
 
-namespace Service.Tasks.Domain.Models;
+namespace Service.Tasks.Domain.Models.Task;
 
 public class TaskModel : ModelBase
 {

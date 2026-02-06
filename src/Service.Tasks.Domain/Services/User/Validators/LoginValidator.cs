@@ -6,7 +6,7 @@ namespace Service.Tasks.Domain.Services.User.Validators;
 
 public class LoginValidator
     : AbstractValidator<UserModel>,
-        IDomainCustomValidator
+        IDomainCustomValidator<UserModel>
 {
     public LoginValidator(
         IUserProvider userProvider)

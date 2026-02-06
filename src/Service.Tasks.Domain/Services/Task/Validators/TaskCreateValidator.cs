@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Service.Tasks.Data.Repositories;
-using Service.Tasks.Domain.Models;
 using Service.Tasks.Domain.Models.Base.Validators;
+using Service.Tasks.Domain.Models.Task;
 using Service.Tasks.Shared.Models;
 
 namespace Service.Tasks.Domain.Services.Task.Validators;

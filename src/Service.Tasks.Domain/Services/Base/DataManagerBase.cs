@@ -1,5 +1,4 @@
 using AutoMapper;
-using FluentValidation;
 using Service.Tasks.Data.Models.Base;
 using Service.Tasks.Data.Repositories.Base;
 using Service.Tasks.Data.Services;

@@ -6,7 +6,7 @@ using NSwag.Annotations;
 using Service.Tasks.API.Controllers.Base;
 using Service.Tasks.API.Models.Base;
 using Service.Tasks.API.Models.Task;
-using Service.Tasks.Domain.Models;
+using Service.Tasks.Domain.Models.Task;
 using Service.Tasks.Domain.Services.Task;
 using Service.Tasks.Shared.Models;
 using static Microsoft.AspNetCore.Http.StatusCodes;

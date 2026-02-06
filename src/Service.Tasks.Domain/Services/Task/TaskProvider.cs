@@ -2,7 +2,7 @@
 using Service.Tasks.Data.Models;
 using Service.Tasks.Data.Repositories;
 using Service.Tasks.Data.Services;
-using Service.Tasks.Domain.Models;
+using Service.Tasks.Domain.Models.Task;
 using Service.Tasks.Domain.Services.Base;
 using Service.Tasks.Shared.Models;
 

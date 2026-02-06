@@ -1,6 +1,6 @@
 using AutoMapper;
-using Service.Tasks.Domain.Models;
 using Service.Tasks.Data.Models;
+using Service.Tasks.Domain.Models.Task;
 using Service.Tasks.Domain.Models.User;
 
 namespace Service.Tasks.Domain;
