@@ -7,7 +7,7 @@ using Service.Tasks.Shared.Models;
 
 namespace Service.Tasks.UserJwtToken.Helpers;
 
-public class JwtTokenGenerator : IJwtTokenGenerator
+internal sealed class JwtTokenGenerator : IJwtTokenGenerator
 {
     private readonly ILogger<JwtTokenGenerator> _logger;
 

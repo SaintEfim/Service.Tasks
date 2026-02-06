@@ -9,7 +9,7 @@ using Service.Tasks.Shared.Models;
 namespace Service.Tasks.API.Controllers.Base;
 
 [ApiController]
-internal abstract class ControllerCrudBase<TDto, TModel, TManager, TProvider> : ControllerBase
+public abstract class ControllerCrudBase<TDto, TModel, TManager, TProvider> : ControllerBase
     where TDto : class, IDto
     where TModel : class, IModel
     where TManager : IDataManager<TModel>

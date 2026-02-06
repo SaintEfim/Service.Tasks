@@ -2,7 +2,7 @@
 
 namespace Service.Tasks.UserJwtToken.Helpers;
 
-public class AuthenticationSettings
+public sealed class AuthenticationSettings
 {
     public AuthenticationSettings(
         IConfiguration config)

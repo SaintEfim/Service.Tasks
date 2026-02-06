@@ -4,7 +4,7 @@ using Service.Tasks.UserJwtToken.Helpers;
 
 namespace Service.Tasks.UserJwtToken;
 
-public class UserJwtTokenModule : Module
+public sealed class UserJwtTokenModule : Module
 {
     protected override void Load(
         ContainerBuilder builder)

@@ -1,6 +1,12 @@
 namespace Service.Tasks.API.Models.Base;
 
+/// <summary>
+/// Interface for all Data Transfer Objects (DTOs).
+/// </summary>
 public interface IDto
 {
-    public Guid Id { get; set; }
+    /// <summary>
+    /// Gets or sets the unique identifier.
+    /// </summary>
+    Guid Id { get; set; }
 }
