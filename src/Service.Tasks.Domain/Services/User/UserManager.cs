@@ -85,19 +85,47 @@ public class UserManager
         };
     }
 
-    public Task<AuthenticationModel> Refresh(
+    public async Task<AuthenticationModel> Refresh(
         string refreshToken,
         ITransaction? transaction = null,
         CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var (userId, userRole) = await _jwtTokenGenerator.DecodeRefreshToken(refreshToken,
+            _authenticationSettings.RefreshSecretKey, cancellationToken);
+
+        if (!Enum.TryParse(userRole, out RoleEnum enumRole))
+        {
+            throw new InvalidDataException("Invalid user role");
+        }
+
+        var newAccessToken = await _jwtTokenGenerator.GenerateToken(userId, enumRole,
+            _authenticationSettings.AccessSecretKey, TimeSpan.Parse(_authenticationSettings.AccessHours),
+            cancellationToken);
+        var newRefreshToken = await _jwtTokenGenerator.GenerateToken(userId, enumRole,
+            _authenticationSettings.RefreshSecretKey, TimeSpan.Parse(_authenticationSettings.RefreshHours),
+            cancellationToken);
+
+        return new AuthenticationModel
+        {
+            TokenType = "Bearer",
+            AccessToken = newAccessToken,
+            ExpiresIn = (int) TimeSpan.Parse(_authenticationSettings.AccessHours)
+                .TotalSeconds,
+            RefreshToken = newRefreshToken
+        };
     }
 
-    public System.Threading.Tasks.Task ResetPassword(
-        UserModel user,
+    public async System.Threading.Tasks.Task ResetPassword(
+        Guid userId,
+        string newPassword,
         ITransaction? transaction = null,
         CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var user = await _userRepository.GetOneById(userId, transaction: transaction,
+            cancellationToken: cancellationToken);
+
+        user.Password = _passwordHasher.Hash(newPassword);
+
+        await _userRepository.Update(user, transaction, cancellationToken);
     }
 }

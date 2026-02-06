@@ -100,7 +100,6 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         string secretKey,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrEmpty(secretKey);
         cancellationToken.ThrowIfCancellationRequested();
 
         return Task.FromResult(Encoding.UTF8.GetBytes(secretKey));
@@ -111,7 +110,6 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         string? role,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrEmpty(id);
         cancellationToken.ThrowIfCancellationRequested();
 
         var claims = new List<Claim> { new(ClaimTypes.NameIdentifier, id) };
@@ -122,5 +120,24 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         }
 
         return Task.FromResult(claims);
+    }
+
+    public async Task<(string UserId, string UserRole)> DecodeRefreshToken(
+        string refreshToken,
+        string refreshTokenSecretKey,
+        CancellationToken cancellationToken = default)
+    {
+        var user = await DecodeToken(refreshToken, refreshTokenSecretKey, cancellationToken);
+        var userId = user.FindFirst(ClaimTypes.NameIdentifier)
+            ?.Value;
+        var userRole = user.FindFirst(ClaimTypes.Role)
+            ?.Value;
+
+        if (userId != null && userRole != null)
+        {
+            return (userId, userRole);
+        }
+
+        throw new Exception("An error occurred while processing your request.");
     }
 }

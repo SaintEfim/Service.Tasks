@@ -16,4 +16,9 @@ public interface IJwtTokenGenerator
         string token,
         string secretKey,
         CancellationToken cancellationToken = default);
+
+    Task<(string UserId, string UserRole)> DecodeRefreshToken(
+        string refreshToken,
+        string refreshTokenSecretKey,
+        CancellationToken cancellationToken = default);
 }

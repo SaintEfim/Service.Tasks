@@ -21,7 +21,8 @@ public interface IUserManager
         CancellationToken cancellationToken = default);
 
     System.Threading.Tasks.Task ResetPassword(
-        UserModel user,
+        Guid userId,
+        string newPassword,
         ITransaction? transaction = null,
         CancellationToken cancellationToken = default);
 }
