@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Service.Tasks.Data.Abstractions\Service.Tasks.Data.Abstractions.csproj" />
       <ProjectReference Include="..\Service.Tasks.Shared\Service.Tasks.Shared.csproj" />
     </ItemGroup>
 

@@ -37,7 +37,7 @@ public class TaskController : ControllerCrudBase<TaskDto, TaskModel, ITaskManage
     [HttpGet("{id:guid}", Name = nameof(TaskGetById))]
     [OpenApiOperation(nameof(TaskGetById))]
     [SwaggerResponse(Status200OK, typeof(TaskDto))]
-    [SwaggerResponse(Status404NotFound, typeof(string))]
+    [SwaggerResponse(Status404NotFound, typeof(ErrorDto))]
     public async Task<ActionResult<TaskDto>> TaskGetById(
         Guid id,
         CancellationToken cancellationToken = default)
@@ -48,6 +48,7 @@ public class TaskController : ControllerCrudBase<TaskDto, TaskModel, ITaskManage
     [HttpPost]
     [OpenApiOperation(nameof(TaskCreate))]
     [SwaggerResponse(Status201Created, typeof(CreateActionResultDto))]
+    [SwaggerResponse(Status400BadRequest, typeof(ErrorDto))]
     public Task<IActionResult> TaskCreate(
         [FromBody] TaskCreateDto payload,
         CancellationToken cancellationToken = default)
@@ -58,7 +59,8 @@ public class TaskController : ControllerCrudBase<TaskDto, TaskModel, ITaskManage
     [HttpPatch("{id:guid}")]
     [OpenApiOperation(nameof(TaskUpdate))]
     [SwaggerResponse(Status200OK, typeof(void))]
-    [SwaggerResponse(Status404NotFound, typeof(string))]
+    [SwaggerResponse(Status404NotFound, typeof(ErrorDto))]
+    [SwaggerResponse(Status400BadRequest, typeof(ErrorDto))]
     public async Task<IActionResult> TaskUpdate(
         Guid id,
         [FromBody] JsonPatchDocument<TaskUpdateDto> patchDocument,
@@ -70,7 +72,8 @@ public class TaskController : ControllerCrudBase<TaskDto, TaskModel, ITaskManage
     [HttpDelete("{id:guid}")]
     [OpenApiOperation(nameof(TaskDelete))]
     [SwaggerResponse(Status204NoContent, typeof(void))]
-    [SwaggerResponse(Status404NotFound, typeof(string))]
+    [SwaggerResponse(Status400BadRequest, typeof(ErrorDto))]
+    [SwaggerResponse(Status404NotFound, typeof(ErrorDto))]
     public async Task<IActionResult> TaskDelete(
         Guid id,
         CancellationToken cancellationToken = default)

@@ -1,6 +1,7 @@
 using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Service.Tasks.API.Handlers;
 using Service.Tasks.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,9 @@ builder.Services
     .AddNewtonsoftJson();
 
 builder.Services.AddOpenApiDocument();
+
+builder.Services.AddExceptionHandler<ExceptionHandlerBase>();
+builder.Services.AddProblemDetails();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly, Assembly.GetExecutingAssembly());
 
@@ -29,6 +33,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseRouting();
+app.UseExceptionHandler();
 app.MapControllers();
 
 await app.RunAsync();

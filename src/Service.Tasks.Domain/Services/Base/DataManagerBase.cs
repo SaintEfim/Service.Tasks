@@ -1,45 +1,121 @@
+using System.Collections.Immutable;
 using AutoMapper;
-using Service.Task.Domain.Services.Base;
+using FluentValidation;
 using Service.Tasks.Data.Models.Base;
 using Service.Tasks.Data.Repositories.Base;
+using Service.Tasks.Data.Services;
 using Service.Tasks.Domain.Models.Base;
+using Service.Tasks.Domain.Models.Base.Validators;
 
 namespace Service.Tasks.Domain.Services.Base;
 
-public abstract class DataManagerBase<TModel, TEntity, TRepository> : IDataManager<TModel>
-    where TModel : class, IModel
+public abstract class DataManagerBase<TDomain, TEntity, TRepository> : IDataManager<TDomain>
+    where TDomain : class, IModel
     where TEntity : class, IEntity
     where TRepository : IRepository<TEntity>
 {
     protected DataManagerBase(
         IMapper mapper,
-        TRepository repository)
+        TRepository repository,
+        IEnumerable<IDomainValidator<TDomain>> validators)
     {
         Mapper = mapper;
         Repository = repository;
+        Validators = validators;
     }
+
+    protected IEnumerable<IDomainValidator<TDomain>> Validators { get; }
 
     protected IMapper Mapper { get; }
     protected TRepository Repository { get; }
 
-    public async Task<TModel> Create(
-        TModel model,
+    public async Task<TDomain> Create<TDomainCreate>(
+        TDomainCreate model,
+        ITransaction? transaction = null,
         CancellationToken cancellationToken = default)
+        where TDomainCreate : class
     {
-        return Mapper.Map<TModel>(await Repository.Create(Mapper.Map<TEntity>(model), cancellationToken));
+        Validate<IDomainCreateValidator<TDomain>>(Mapper.Map<TDomain>(model), cancellationToken);
+        return await CreateAction(model, transaction, cancellationToken);
     }
 
-    public async Task<TModel> Update(
-        TModel model,
+    protected virtual async Task<TDomain> CreateAction<TDomainCreate>(
+        TDomainCreate model,
+        ITransaction? transaction = null,
         CancellationToken cancellationToken = default)
     {
-        return Mapper.Map<TModel>(await Repository.Update(Mapper.Map<TEntity>(model), cancellationToken));
+        var entity = Mapper.Map<TEntity>(model);
+        var createdEntity = await Repository.Create(entity, transaction, cancellationToken);
+        return Mapper.Map<TDomain>(createdEntity);
     }
 
-    public async Task<TModel> Delete(
+    public async Task<TDomain> Update<TDomainUpdate>(
+        TDomainUpdate model,
+        ITransaction? transaction = null,
+        CancellationToken cancellationToken = default)
+        where TDomainUpdate : class
+    {
+        var domainModel = Mapper.Map<TDomain>(model);
+        Validate<IDomainUpdateValidator<TDomain>>(domainModel, cancellationToken);
+        return await UpdateAction(domainModel, transaction, cancellationToken);
+    }
+
+    protected virtual async Task<TDomain> UpdateAction<TDomainUpdate>(
+        TDomainUpdate model,
+        ITransaction? transaction = null,
+        CancellationToken cancellationToken = default)
+    {
+        var entity = Mapper.Map<TEntity>(model);
+        var updatedEntity = await Repository.Update(entity, transaction, cancellationToken);
+        return Mapper.Map<TDomain>(updatedEntity);
+    }
+
+    public async Task<TDomain> Delete(
         Guid id,
+        ITransaction? transaction = null,
         CancellationToken cancellationToken = default)
     {
-        return Mapper.Map<TModel>(await Repository.Delete(id, cancellationToken));
+        var entity = await Repository.GetOneById(id, cancellationToken: cancellationToken);
+        var domainModel = Mapper.Map<TDomain>(entity);
+        Validate<IDomainUpdateValidator<TDomain>>(domainModel, cancellationToken);
+        return await DeleteAction(id, transaction, cancellationToken);
+    }
+
+    protected virtual async Task<TDomain> DeleteAction(
+        Guid id,
+        ITransaction? transaction = null,
+        CancellationToken cancellationToken = default)
+    {
+        var deletedEntity = await Repository.Delete(id, transaction, cancellationToken);
+        return Mapper.Map<TDomain>(deletedEntity);
+    }
+
+    protected void Validate<TV>(
+        TDomain model,
+        CancellationToken cancellationToken = default)
+        where TV : IDomainValidator<TDomain>
+    {
+        var validators = Validators.Where(v => v is TV)
+            .Cast<IValidator<TDomain>>()
+            .ToList();
+
+        Validate(model, validators, cancellationToken);
+    }
+
+    private static void Validate<TPayload>(
+        TPayload model,
+        IEnumerable<IValidator<TPayload>> source,
+        CancellationToken cancellationToken = default)
+        where TPayload : IModel
+    {
+        var failures = source.Select(async x => await x.ValidateAsync(model, cancellationToken))
+            .SelectMany(x => x.Result.Errors)
+            .Where(x => x != null)
+            .ToImmutableList();
+
+        if (!failures.IsEmpty)
+        {
+            throw new ValidationException(failures);
+        }
     }
 }

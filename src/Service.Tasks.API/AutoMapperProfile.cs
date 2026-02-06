@@ -14,8 +14,14 @@ public class AutoMapperProfile : Profile
 
         CreateMap<TaskCreateDto, TaskModel>();
 
-        CreateMap<TaskUpdateDto, TaskModel>()
-            .ReverseMap();
+        CreateMap<TaskModel, TaskUpdateDto>()
+            .ForMember(dest => dest.ChildIds, opt => opt.MapFrom(src => src.Children
+                .Select(model => model.Id)
+                .ToList()))
+            .ReverseMap()
+            .ForMember(dest => dest.Children, opt => opt.MapFrom(src => src.ChildIds
+                .Select(id => new TaskModel { Id = id })
+                .ToList()));
 
         CreateMap<TaskModel, CreateActionResultDto>();
     }

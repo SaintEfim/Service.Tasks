@@ -1,19 +1,25 @@
+using Service.Tasks.Data.Services;
 using Service.Tasks.Domain.Models.Base;
 
-namespace Service.Task.Domain.Services.Base;
+namespace Service.Tasks.Domain.Services.Base;
 
-public interface IDataManager<TModel>
-    where TModel : class, IModel
+public interface IDataManager<TDomain>
+    where TDomain : class, IModel
 {
-    Task<TModel> Create(
-        TModel model,
-        CancellationToken cancellationToken = default);
+    Task<TDomain> Create<TDomainCreate>(
+        TDomainCreate entity,
+        ITransaction? transaction = null,
+        CancellationToken cancellationToken = default)
+        where TDomainCreate : class;
 
-    Task<TModel> Update(
-        TModel model,
-        CancellationToken cancellationToken = default);
+    Task<TDomain> Update<TDomainUpdate>(
+        TDomainUpdate model,
+        ITransaction? transaction = null,
+        CancellationToken cancellationToken = default)
+        where TDomainUpdate : class;
 
-    Task<TModel> Delete(
+    Task<TDomain> Delete(
         Guid id,
+        ITransaction? transaction = null,
         CancellationToken cancellationToken = default);
 }

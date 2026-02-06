@@ -1,9 +1,9 @@
 using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Service.Task.Domain.Services.Base;
 using Service.Tasks.API.Models.Base;
 using Service.Tasks.Domain.Models.Base;
+using Service.Tasks.Domain.Services.Base;
 using Service.Tasks.Shared.Models;
 
 namespace Service.Tasks.API.Controllers.Base;
@@ -36,7 +36,7 @@ public abstract class ControllerCrudBase<TDto, TModel, TManager, TProvider> : Co
         bool withIncludes = false,
         CancellationToken cancellationToken = default)
     {
-        var models = await Provider.Get(filter, withIncludes, cancellationToken);
+        var models = await Provider.Get(filter, withIncludes, cancellationToken: cancellationToken);
         return Mapper.Map<IEnumerable<TDto>>(models);
     }
 
@@ -45,7 +45,7 @@ public abstract class ControllerCrudBase<TDto, TModel, TManager, TProvider> : Co
         bool withIncludes = false,
         CancellationToken cancellationToken = default)
     {
-        var model = await Provider.GetOneById(id, withIncludes, cancellationToken);
+        var model = await Provider.GetOneById(id, withIncludes, cancellationToken: cancellationToken);
         return Mapper.Map<TDto?>(model);
     }
 
@@ -56,7 +56,7 @@ public abstract class ControllerCrudBase<TDto, TModel, TManager, TProvider> : Co
         where TCreateDto : class
     {
         var model = Mapper.Map<TModel>(createDto);
-        var created = await Manager.Create(model, cancellationToken);
+        var created = await Manager.Create(model, cancellationToken: cancellationToken);
         return CreatedAtRoute(getByIdRouteName, new { id = created.Id }, Mapper.Map<TCreatedResultDto>(created));
     }
 
@@ -66,7 +66,7 @@ public abstract class ControllerCrudBase<TDto, TModel, TManager, TProvider> : Co
         CancellationToken cancellationToken = default)
         where TUpdateDto : class
     {
-        var model = await Provider.GetOneById(id, true, cancellationToken);
+        var model = await Provider.GetOneById(id, true, cancellationToken: cancellationToken);
         var updateDto = Mapper.Map<TUpdateDto>(model);
 
         patchDocument.ApplyTo(updateDto);
@@ -77,7 +77,7 @@ public abstract class ControllerCrudBase<TDto, TModel, TManager, TProvider> : Co
         }
 
         Mapper.Map(updateDto, model);
-        var updated = await Manager.Update(model, cancellationToken);
+        var updated = await Manager.Update(model, cancellationToken: cancellationToken);
 
         return Ok(Mapper.Map<TDto>(updated));
     }
@@ -86,7 +86,7 @@ public abstract class ControllerCrudBase<TDto, TModel, TManager, TProvider> : Co
         Guid id,
         CancellationToken cancellationToken = default)
     {
-        await Manager.Delete(id, cancellationToken);
+        await Manager.Delete(id, cancellationToken: cancellationToken);
         return NoContent();
     }
 }

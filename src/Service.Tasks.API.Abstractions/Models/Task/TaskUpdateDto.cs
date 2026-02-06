@@ -10,4 +10,7 @@ public class TaskUpdateDto
     public string? Description { get; set; }
 
     public Guid? ParentId { get; set; }
+
+    [Required]
+    public required List<Guid> ChildIds { get; set; } = [];
 }

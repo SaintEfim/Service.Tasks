@@ -20,6 +20,6 @@ public class TaskFilterSortProfile : ISieveConfiguration
             .CanSort();
 
         mapper.Property<TaskEntity>(p => p.ParentId)
-            .CanSort();
+            .CanFilter();
     }
 }

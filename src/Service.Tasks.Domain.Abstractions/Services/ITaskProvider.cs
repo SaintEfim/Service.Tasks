@@ -1,5 +1,5 @@
-﻿using Service.Task.Domain.Services.Base;
-using Service.Tasks.Domain.Models;
+﻿using Service.Tasks.Domain.Models;
+using Service.Tasks.Domain.Services.Base;
 
 namespace Service.Tasks.Domain.Services;
 
