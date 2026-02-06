@@ -5,5 +5,5 @@ namespace Service.Tasks.API.Models.Base;
 public class DtoBase : IDto
 {
     [Required]
-    public Guid Id { get; set; }
+    public required Guid Id { get; set; }
 }

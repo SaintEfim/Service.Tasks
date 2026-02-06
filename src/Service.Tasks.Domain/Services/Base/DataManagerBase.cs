@@ -6,7 +6,6 @@ using Service.Tasks.Data.Repositories.Base;
 using Service.Tasks.Data.Services;
 using Service.Tasks.Domain.Models.Base;
 using Service.Tasks.Domain.Models.Base.Validators;
-using ValidationException = System.ComponentModel.DataAnnotations.ValidationException;
 
 namespace Service.Tasks.Domain.Services.Base;
 
@@ -116,7 +115,7 @@ public abstract class DataManagerBase<TDomain, TEntity, TRepository> : IDataMana
 
         if (!failures.IsEmpty)
         {
-            throw new ValidationException(failures.ToString());
+            throw new ValidationException(failures);
         }
     }
 }
