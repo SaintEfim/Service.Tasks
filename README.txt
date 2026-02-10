@@ -9,7 +9,6 @@ Service.Tasks
 🔍 Фильтрация задач по различным полям
 
 Быстрый запуск
-bash
 # Сборка образа
 docker build -t tasks-api -f .\src\Service.Tasks.API\Dockerfile .
 
@@ -24,7 +23,4 @@ JWT аутентификация
 
 Entity Framework Core
 
-Docker
-
-Требования
 Docker
